@@ -1,14 +1,16 @@
-package poogleForms.form;
+package poogleForms.model.form;
 
 public class TextTypeQuestion implements Question{
 
 	public final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.TEXT_QUESTIONS;
-	public long questionID;
+	public long ID;
+	
+	public static long tempID=5000;
 	
 	public long formID;
 	
 	public String prompt;
-	public String handler;
+	public static String handler = "TextTypeQuestionHandler.jsp";
 
 	
 	
@@ -17,11 +19,9 @@ public class TextTypeQuestion implements Question{
 		this.prompt = prompt;
 		this.formID= formID;
 		//to-do
-		questionID = 0;
+		ID = --tempID;
 	}
 
-	
-	
 	public long getFormID() {
 		return formID;
 	}
@@ -29,13 +29,11 @@ public class TextTypeQuestion implements Question{
 	public void setFormID(long formID) {
 		this.formID = formID;
 	}
+	
+	
 
-	public long getID() {
-		return questionID;
-	}
-
-	public void setQuestionID(long questionID) {
-		this.questionID = questionID;
+	private void setQuestionID(long questionID) {
+		this.ID = questionID;
 	}
 	
 	public void setPrompt(String prompt) {
@@ -44,6 +42,11 @@ public class TextTypeQuestion implements Question{
 
 	public void setHandler(String handler) {
 		this.handler = handler;
+	}
+	
+	@Override
+	public long getID() {
+		return ID;
 	}
 
 	@Override

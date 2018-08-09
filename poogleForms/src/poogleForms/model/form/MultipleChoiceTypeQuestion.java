@@ -1,14 +1,20 @@
-package poogleForms.form;
+package poogleForms.model.form;
+
+import poogleForms.model.form.MultipleChoiceTypeQuestion;
+import poogleForms.model.form.Question;
+import poogleForms.model.form.TYPES_OF_QUESTION;
 
 public class MultipleChoiceTypeQuestion implements Question {
 
 	public final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
-	public long questionID;
+	public long ID;
+	
+	public static long idTemp= 5000;
 	
 	public long formID;
 
 	public String prompt;
-	public String handler;
+	public static String handler = "MCQHandler.jsp";
 	
 	public String[] options;
 	
@@ -18,7 +24,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 		this.options = options;
 		this.formID = formID;
 		//to-do
-		questionID= 0;
+		ID= ++idTemp;
 		
 	}
 	public long getFormID() {
@@ -28,13 +34,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 	public void setFormID(long formID) {
 		this.formID = formID;
 	}
-	public long getID() {
-		return questionID;
-	}
-
-	public void setQuestionID(long questionID) {
-		this.questionID = questionID;
-	}
+	
 	
 	public String[] getOptions() {
 		return options;
@@ -49,9 +49,13 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 
 	public void setHandler(String handler) {
-		this.handler = handler;
+		MultipleChoiceTypeQuestion.handler = handler;
 	}
-
+	
+	@Override
+	public long getID() {
+		return ID;
+	}
 	@Override
 	public String getPrompt() {
 		// TODO Auto-generated method stub

@@ -1,4 +1,4 @@
-package poogleForms.form;
+package poogleForms.model.form;
 
 public interface Question {
 	public long getID();

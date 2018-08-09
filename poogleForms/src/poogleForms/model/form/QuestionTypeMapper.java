@@ -1,4 +1,4 @@
-package poogleForms.form;
+package poogleForms.model.form;
 
 import java.util.HashMap;
 import java.util.Map;

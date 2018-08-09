@@ -1,4 +1,4 @@
-package poogleForms.form;
+package poogleForms.model.form;
 
 public enum TYPES_OF_QUESTION {
 	MULTIPLE_CHOICES, TEXT_QUESTIONS;
