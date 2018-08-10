@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import poogleForms.model.form.Question;
 
 /**
- * Servlet implementation class TextTypeQuestion
+ * Servlet implementation class MCQHandler
  */
-@WebServlet("/TextTypeQuestionHandler")
-public class TextTypeQuestionHandler extends HttpServlet {
+@WebServlet("/MCQHandler")
+public class CreateMCQ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TextTypeQuestionHandler() {
+    public CreateMCQ() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +29,10 @@ public class TextTypeQuestionHandler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		System.out.println("textTypehandler opened");
-		request.getRequestDispatcher("TextTypeQuestionHandler.jsp").include(request, response);
-		//System.out.println("from textType handler: " + request.getParameter(Long.toString(((Question) (request.getAttribute("currQuestion"))).getID())));
+		///response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("mcqhandler opened");
+		request.getRequestDispatcher("MCQHandler.jsp").include(request, response);
+		//System.out.println("from mcq handler: " + request.getParameter(Long.toString(((Question) (request.getAttribute("currQuestion"))).getID())));
 	}
 
 	/**

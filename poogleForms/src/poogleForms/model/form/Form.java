@@ -12,7 +12,7 @@ public class Form {
 	
 	String name;
 	
-	long adminID;
+	String adminUsername;
 	
 	public String getName() {
 		return name;
@@ -46,34 +46,34 @@ public class Form {
 		this.formID = formID;
 	}
 
-	public long getAdminID() {
-		return adminID;
+	public String getAdminUsername() {
+		return adminUsername;
 	}
 
-	public void setAdminID(long adminID) {
-		this.adminID = adminID;
+	public void setAdminID(String username) {
+		this.adminUsername = username;
 	}
 	
-	public Form(String name, Map<Long, Question> questionMap, long adminID){
+	public Form(String name, Map<Long, Question> questionMap, String adminUsername){
 		this.name = name;
 		map = questionMap;
 		list = new ArrayList<Question>();
 		for(Entry<Long,Question> e : map.entrySet()){
 			list.add(e.getValue());
 		}
-		this.adminID = adminID;
+		this.adminUsername = adminUsername;
 		//TO-DO
 		formID = 0;
 	}
 	
-	public Form(String name, ArrayList<Question> list, long adminID){
+	public Form(String name, ArrayList<Question> list, String adminUsername){
 		this.name = name;
 		this.list = list;
 		map = new HashMap<Long, Question>();
 		for(int i=0;i<list.size();i++){
 			map.put(list.get(i).getID(), list.get(i));
 		}
-		this.adminID = adminID;
+		this.adminUsername = adminUsername;
 		//TO-DO
 		formID = 0;
 	}
