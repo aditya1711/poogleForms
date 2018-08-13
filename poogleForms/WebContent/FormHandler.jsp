@@ -18,7 +18,7 @@
 	<form method="post" >
 	<c:forEach var="ques" items = "${form.list}">
 		<c:set var="currQuestion" scope = "request" value = "${ques}"  />
-		<c:import url = "${currQuestion.handler}"/>
+		<c:import url = "${currQuestion.handler}"></c:import>
 	</c:forEach>
 	<br><br>
 	<input type="submit" value ="submit"/>

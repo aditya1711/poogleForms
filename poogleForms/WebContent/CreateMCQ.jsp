@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>createmcq</title>
+<title>createMCQ</title>
 </head>
 <body>
-
-	<form id="mainForm" method="post">
+	<br>
+	<form method="post">
 		<input type = "text" name = "questionName">Enter Question Name<BR>
 		
 		<p id = "options">
@@ -23,16 +23,11 @@
 <script type="text/javascript">
 	var optionIndex = 0;
 	function addOption(id){
-		console.log(id);
-		document.getElementById("mainForm").append(document.createElement("br"));
+		document.getElementById(id).append(document.createElement("br"));
 		var i = document.createElement("INPUT");
 		i.setAttribute("type", "text");
-		/* i.setAttribute("placeholder", "option@" + optionIndex++); */
 		i.setAttribute("name" , "option@" + optionIndex++)
-		document.getElementById("mainForm").append(i);
-		
-		console.log(i);
-		return false;
+		document.getElementById(id).append(i);
 	}
 </script>
 </body>
