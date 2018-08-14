@@ -6,38 +6,86 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-	<form method = "post" >
+	<form id = "mainForm" method = "post"  >
 		<input type="text" name="formName">Enter form Name<BR>
-	
-	
-	<p id ="addQuestions">
 		
-	</p>
-	
+		<p id ="addQuestions">
+			
+		</p>
+		
+		<button type="button" onclick= "addMCQ('addQuestions')" >add MCQ</button>
+		<button type="button" onclick= "addTextQuestion('addQuestions')" >add Text</button><br>
+		
+		<input type="submit"	>
 	</form>
-	<button type="button" onclick= "addMCQ()" >add MCQ</button>
-	<button type="button" onclick= "addTextQuestion()" >add Text</button><br>
-	<input type = "submit">
+	
+	
+	<!-- <button type="button" onclick="submitAll()">SUBMIT</button> -->
+	
+	
 	
 <script>
+	var optionIndex = [];
+	var questionIndex=0;
+	
+	function addOption(id,questionNumber){
+		document.getElementById(id).append(document.createElement("br"));
+		var i = document.createElement("INPUT");
+		i.setAttribute("type", "text");
+		i.setAttribute("name" , "option@" + questionNumber + ":" + optionIndex[questionNumber]++);
+		document.getElementById(id).appendChild(i);
+	}
 
-	function addMCQ(){
-		var x = document.getElementById("addQuestions");
-		var importTo = document.createElement("c:import");
-		importTo.setAttribute("url", "CreateMCQ.jsp");
-		x.appendChild(importTo);
-		console.log(importTo);
-		console.log(x);
-		//document.getElementById("addQuestions").innerHTML += "<c:import url ='CreateMCQ'/>";
-		//document.getElementById("addQuestions").append("<jsp:include page='CreateMCQ'/>");
-		//<c:import url="CreateMCQ"/>
+	function addMCQ(id){
+		optionIndex.push(0);
+		
+		var para = document.createElement("p");
+		para.setAttribute("id", "question:" + questionIndex);
+		
+		var qNameField = document.createElement("input");
+		qNameField.setAttribute("type", "text");
+		qNameField.setAttribute("name", "questionNumber:" + questionIndex+ " MCQ");
+		qNameField.setAttribute("placeholder", "Question Promt for question: ?" + questionIndex);
+		//qNameField.append("Enter Question Prompt");
+		console.log(qNameField);
+		
+		var optionsPara = document.createElement("p");
+		optionsPara.setAttribute("id", "options@" + questionIndex);
+		
+		var addOptionButton = document.createElement("button");
+		addOptionButton.setAttribute("onclick", "addOption('options@" + questionIndex + "'," + questionIndex +")");
+		addOptionButton.setAttribute("type", "button");
+		addOptionButton.append("add option");
+		
+		optionsPara.appendChild(addOptionButton);
+		
+		para.appendChild(qNameField);
+		para.appendChild(optionsPara);
+		
+		document.getElementById(id).appendChild(para);
+		
+		questionIndex++;
 	}
 	
-	function addTextQuestion(){
+	function addTextQuestion(id){
+		optionIndex.push(0);
 		
+		var para = document.createElement("p");
+		para.setAttribute("id", "question:" + questionIndex);
+		
+		var qNameField = document.createElement("input");
+		qNameField.setAttribute("type", "text");
+		qNameField.setAttribute("name", "questionNumber:" + questionIndex + " Text");
+		qNameField.setAttribute("placeholder", "Question Promt for question: ?" + questionIndex);
+		
+		para.appendChild(qNameField);
+		document.getElementById(id).appendChild(para);
+		
+		questionIndex++;
 	}
 </script>
 

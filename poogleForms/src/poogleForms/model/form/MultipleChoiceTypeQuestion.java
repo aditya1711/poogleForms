@@ -1,10 +1,16 @@
 package poogleForms.model.form;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
 import poogleForms.model.form.TYPES_OF_QUESTION;
 
 public class MultipleChoiceTypeQuestion implements Question {
+
+	
+	
 
 	public final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
 	public long ID;
@@ -16,12 +22,36 @@ public class MultipleChoiceTypeQuestion implements Question {
 	public String prompt;
 	public static String handler = "MCQHandler.jsp";
 	
-	public String[] options;
+	public ArrayList<String> options = new ArrayList<String>();
+	
+	public MultipleChoiceTypeQuestion() {
+		super();
+		//to-do
+		ID= ++idTemp;
+	}
+	
+	public MultipleChoiceTypeQuestion(long formID, String prompt) {
+		super();
+		this.formID = formID;
+		this.prompt = prompt;
+		//to-do
+		ID= ++idTemp;
+	}
+	
+	public MultipleChoiceTypeQuestion(String prompt, ArrayList<String> options, long formID) {
+		super();
+		this.prompt = prompt;
+		this.options = options;
+		this.formID = formID;
+		//to-do
+		ID= ++idTemp;
+		
+	}
 	
 	public MultipleChoiceTypeQuestion(String prompt, String[] options, long formID) {
 		super();
 		this.prompt = prompt;
-		this.options = options;
+		this.options = new ArrayList<String>(Arrays.asList(options));
 		this.formID = formID;
 		//to-do
 		ID= ++idTemp;
@@ -36,11 +66,11 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 	
 	
-	public String[] getOptions() {
+	public ArrayList<String> getOptions() {
 		return options;
 	}
 
-	public void setOptions(String[] options) {
+	public void setOptions(ArrayList<String> options) {
 		this.options = options;
 	}
 
@@ -73,5 +103,12 @@ public class MultipleChoiceTypeQuestion implements Question {
 		// TODO Auto-generated method stub
 		return handler;
 	}
-
+	
+	public void addOption(String option){
+		options.add(option);
+	}
+	
+	public String toString(){
+		return "MCQ prompt: " + getPrompt() + " options: " + options.toString() + "\n";
+	}
 }

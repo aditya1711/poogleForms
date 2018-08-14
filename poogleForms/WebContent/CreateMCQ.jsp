@@ -11,7 +11,7 @@
 <body>
 	<br>
 	<form method="post">
-		<input type = "text" name = "questionName">Enter Question Name<BR>
+		<input type = "text" name = "questionName" value="Enter prompt"><BR>
 		
 		<p id = "options">
 			<button type="button" onclick="addOption('options')">add option</button><br>
