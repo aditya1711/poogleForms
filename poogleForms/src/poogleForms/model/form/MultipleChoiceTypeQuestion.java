@@ -1,18 +1,25 @@
 package poogleForms.model.form;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
 import poogleForms.model.form.TYPES_OF_QUESTION;
 
 public class MultipleChoiceTypeQuestion implements Question {
-
 	
-	
-
-	public final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
+	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
 	public long ID;
 	
 	public static long idTemp= 5000;
@@ -20,9 +27,10 @@ public class MultipleChoiceTypeQuestion implements Question {
 	public long formID;
 
 	public String prompt;
+	public ArrayList<String> options = new ArrayList<String>();
+	
 	public static String handler = "MCQHandler.jsp";
 	
-	public ArrayList<String> options = new ArrayList<String>();
 	
 	public MultipleChoiceTypeQuestion() {
 		super();
@@ -30,6 +38,10 @@ public class MultipleChoiceTypeQuestion implements Question {
 		ID= ++idTemp;
 	}
 	
+	public void setID(long ID) {
+		this.	ID = ID;
+	}
+
 	public MultipleChoiceTypeQuestion(long formID, String prompt) {
 		super();
 		this.formID = formID;
@@ -57,6 +69,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 		ID= ++idTemp;
 		
 	}
+	
 	public long getFormID() {
 		return formID;
 	}
@@ -91,7 +104,8 @@ public class MultipleChoiceTypeQuestion implements Question {
 		// TODO Auto-generated method stub
 		return prompt;
 	}
-
+	
+	@JsonIgnore
 	@Override
 	public TYPES_OF_QUESTION getType() {
 		// TODO Auto-generated method stub
@@ -109,6 +123,20 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 	
 	public String toString(){
-		return "MCQ prompt: " + getPrompt() + " options: " + options.toString() + "\n";
+		return "Question Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + " options: " + options.toString() + "\n";
+	}
+	
+	public String toJSONString() throws JsonProcessingException{
+		return ow.writeValueAsString(this);
+	}
+	
+	@JsonIgnore
+	public static Question getQuestionFromJSONString(String JSONString) throws JsonParseException, JsonMappingException, IOException{
+		return mapper.readValue(JSONString, MultipleChoiceTypeQuestion.class);
+	}
+	
+	@JsonIgnore
+	public String getOptionsAsJSONString() throws JsonProcessingException{
+		return ow.writeValueAsString(options);
 	}
 }

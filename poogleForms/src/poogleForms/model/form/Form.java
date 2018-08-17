@@ -5,14 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 public class Form {
 	Map<Long, Question> map;
 	ArrayList<Question> list;
 	long formID;
 	
 	String name;
-	
 	String adminUsername;
+	
+	public static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 	
 	public String getName() {
 		return name;
@@ -76,6 +81,10 @@ public class Form {
 		this.adminUsername = adminUsername;
 		//TO-DO
 		formID = 0;
+	}
+	
+	public String toJSONString() throws JsonProcessingException{
+		return ow.writeValueAsString(this);
 	}
 	
 	

@@ -1,10 +1,18 @@
 package poogleForms.model.form;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 public class TextTypeQuestion implements Question{
 
-	
-
-	public final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.TEXT_QUESTIONS;
+	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.TEXT_QUESTIONS;
 	public long ID;
 	
 	public static long tempID=5000;
@@ -12,8 +20,10 @@ public class TextTypeQuestion implements Question{
 	public long formID;
 	
 	public String prompt;
+	
 	public static String handler = "TextTypeQuestionHandler.jsp";
-
+	public static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+	
 	public TextTypeQuestion() {
 		super();
 	}
@@ -40,8 +50,8 @@ public class TextTypeQuestion implements Question{
 		this.formID = formID;
 	}
 
-	private void setQuestionID(long questionID) {
-		this.ID = questionID;
+	public void setID(long ID) {
+		this.ID = ID;
 	}
 	
 	public void setPrompt(String prompt) {
@@ -49,7 +59,7 @@ public class TextTypeQuestion implements Question{
 	}
 
 	public void setHandler(String handler) {
-		this.handler = handler;
+		TextTypeQuestion.handler = handler;
 	}
 	
 	@Override
@@ -63,7 +73,7 @@ public class TextTypeQuestion implements Question{
 		return prompt;
 	}
 
-	@Override
+	@Override @JsonIgnore
 	public TYPES_OF_QUESTION getType() {
 		// TODO Auto-generated method stub
 		return QUESTION_TYPE;
@@ -76,7 +86,14 @@ public class TextTypeQuestion implements Question{
 	}
 	
 	public String toString(){
-		return "TEXT prompt: " + getPrompt() + "\n";
+		return "Question Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + "\n";
 	}
-
+	
+	public static Question getQuestionFromJSONString(String JSONString) throws JsonParseException, JsonMappingException, IOException{
+		return mapper.readValue(JSONString, TextTypeQuestion.class);
+	}
+	
+	public String toJSONString() throws JsonProcessingException{
+		return ow.writeValueAsString(this);
+	}
 }

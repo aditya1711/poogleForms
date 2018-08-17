@@ -3,6 +3,8 @@ package poogleForms.model.clients;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import poogleForms.DAO.AnswersDAO;
+
 public class Level1Clients extends ClientAbstract {
 	
 	private HashSet<Long> answerIDs;
@@ -27,6 +29,9 @@ public class Level1Clients extends ClientAbstract {
 	}
 	
 	public Answer getAnswer(Long answerID){
-		return DAO.getDAO().getAnswer(answerID);
+		if(answerIDs.contains(answerID)){
+			return AnswersDAO.getDAO().getAnswer(answerID);
+		}
+		return null;
 	}
 }

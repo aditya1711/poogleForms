@@ -2,6 +2,7 @@ package poogleForms.model.clients;
 
 import java.util.HashSet;
 
+import poogleForms.DAO.FormDAO;
 import poogleForms.model.form.Form;
 
 public class Level2Clients extends Level1Clients {
@@ -20,7 +21,8 @@ public class Level2Clients extends Level1Clients {
 	}
 	public Form getForm(Long ID){
 		if(formsCreatedIDs.contains(ID)){
-			return DAO.getDAO.getForm(ID);
+			return FormDAO.getDAO.getForm(ID);
 		}
 	}
 }
+ 

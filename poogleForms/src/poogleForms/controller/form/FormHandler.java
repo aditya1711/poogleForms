@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import poogleForms.model.form.*;
 
 /**
@@ -37,6 +41,31 @@ public class FormHandler extends HttpServlet {
 		ArrayList<Question> qs = new ArrayList<Question>();
 		qs.add(q1);
 		qs.add(q2);
+		
+		/*try {
+			System.out.println(f.toJSONString());
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		try {
+			System.out.println(q2.toJSONString());
+			q2 = TextTypeQuestion.getQuestionFromJSONString(q2.toJSONString());
+			System.out.println(q2.toString());
+			
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		f = new Form("form how do",qs,"hahaAdmin");
     }
     
