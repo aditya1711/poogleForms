@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import poogleForms.DAO.AnswersDAO;
+import poogleForms.model.form.Answer;
 
 public class Level1Clients extends ClientAbstract {
 	

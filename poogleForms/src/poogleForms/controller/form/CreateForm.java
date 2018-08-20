@@ -77,7 +77,7 @@ public class CreateForm extends HttpServlet {
 		
 		Map<Long,Form> formMap = (Map<Long, Form>) session.getAttribute("createdFormList");
 		Form f= new Form(request.getParameter("formName"), qList, (String)session.getAttribute("adminUsername"));
-		formMap.put(f.getFormID(),f);
+		//formMap.put(f.getID(),f);
 		
 	}
 

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 public class TextTypeQuestion implements Question{
 
 	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.TEXT_QUESTIONS;
-	public long ID;
+	public Long ID;
 	
 	public static long tempID=5000;
 	
@@ -50,8 +50,10 @@ public class TextTypeQuestion implements Question{
 		this.formID = formID;
 	}
 
-	public void setID(long ID) {
-		this.ID = ID;
+	@Override
+	public void setID(Long t) {
+		// TODO Auto-generated method stub
+		ID= t;
 	}
 	
 	public void setPrompt(String prompt) {
@@ -63,7 +65,7 @@ public class TextTypeQuestion implements Question{
 	}
 	
 	@Override
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
 
@@ -96,4 +98,6 @@ public class TextTypeQuestion implements Question{
 	public String toJSONString() throws JsonProcessingException{
 		return ow.writeValueAsString(this);
 	}
+
+	
 }

@@ -3,6 +3,13 @@ package poogleForms.model.clients;
 public class LoginCredentials {
 	private String username, password;
 	private ClientTypes type;
+	
+	public LoginCredentials(String username, String password, ClientTypes t){
+		setUsername(username);
+		setPassword(password);
+		setType(t);
+	}
+	
 	public String getUsername() {
 		return username;
 	}

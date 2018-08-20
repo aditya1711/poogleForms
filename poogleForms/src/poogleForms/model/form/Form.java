@@ -9,10 +9,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-public class Form {
+import poogleForms.model.misc.IDAble;
+
+public class Form implements IDAble<Long> {
 	Map<Long, Question> map;
 	ArrayList<Question> list;
-	long formID;
+	long ID;
 	
 	String name;
 	String adminUsername;
@@ -43,12 +45,16 @@ public class Form {
 		this.list = list;
 	}
 
-	public long getFormID() {
-		return formID;
+	@Override
+	public Long getID() {
+		// TODO Auto-generated method stub
+		return ID;
 	}
 
-	public void setFormID(long formID) {
-		this.formID = formID;
+	@Override
+	public void setID(Long ID) {
+		// TODO Auto-generated method stub
+		ID = ID;
 	}
 
 	public String getAdminUsername() {
@@ -68,7 +74,7 @@ public class Form {
 		}
 		this.adminUsername = adminUsername;
 		//TO-DO
-		formID = 0;
+		ID = 0;
 	}
 	
 	public Form(String name, ArrayList<Question> list, String adminUsername){
@@ -80,7 +86,7 @@ public class Form {
 		}
 		this.adminUsername = adminUsername;
 		//TO-DO
-		formID = 0;
+		ID = 0;
 	}
 	
 	public String toJSONString() throws JsonProcessingException{

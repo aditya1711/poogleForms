@@ -20,7 +20,7 @@ import poogleForms.model.form.TYPES_OF_QUESTION;
 public class MultipleChoiceTypeQuestion implements Question {
 	
 	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
-	public long ID;
+	public Long ID;
 	
 	public static long idTemp= 5000;
 	
@@ -38,7 +38,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 		ID= ++idTemp;
 	}
 	
-	public void setID(long ID) {
+	public void setID(Long ID) {
 		this.	ID = ID;
 	}
 
@@ -96,7 +96,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 	
 	@Override
-	public long getID() {
+	public Long getID() {
 		return ID;
 	}
 	@Override

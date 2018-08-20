@@ -1,16 +1,15 @@
 package poogleForms.model.form;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import poogleForms.model.misc.IDAble;
+import poogleForms.model.misc.JSONConvertible;
 
-public interface Question {
-	public static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+public interface Question extends IDAble<Long>, JSONConvertible{
+	
 	public static  ObjectMapper mapper = new ObjectMapper();
-	public long getID();
 	public long getFormID();
 	public String getPrompt();
 	public TYPES_OF_QUESTION getType();
 	public String getHandler();
-	public String toJSONString() throws JsonProcessingException;
+	
 }

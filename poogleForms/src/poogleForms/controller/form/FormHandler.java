@@ -36,7 +36,7 @@ public class FormHandler extends HttpServlet {
     static Form f;
     static{
     	System.out.println("forma handler opened");
-		Question q1 = new MultipleChoiceTypeQuestion("How do you laugh?", new String[] {"haha", "hehe"}, 15478);
+		Question q1 = new MultipleChoiceTypeQuestion("How do you laugh?", new String[] {"haha", "hehe", "help"}, 15478);
 		Question q2 = new TextTypeQuestion("How do you cry?", 15479);
 		ArrayList<Question> qs = new ArrayList<Question>();
 		qs.add(q1);
