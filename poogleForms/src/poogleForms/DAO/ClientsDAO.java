@@ -15,8 +15,12 @@ public class ClientsDAO extends DAO {
 	private static ClientsDAO clientsDAO = new ClientsDAO();
 	
 	private static final String queryForAllClientData = "use poogleForms; select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from loginCredentials as lc inner join client as c on c.username = lc.username;"; 
-	private static final String queryForAllLevel1Data = ""; 
-	private static final String queryForAllLevel2Data = ""; 
+	
+	private static final String queryForAllClientDataForOneUser = "use poogleForms" +
+																	"select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from (loginCredentials as lc inner join client as c on c.username = lc.username)" + 
+																		"where lc.username = ? and lc.password = ?";
+	private static final String queryForAllLevel1DataForOneUser = ""; 
+	private static final String queryForAllLevel2DataForOneUser = ""; 
 	
 	Connection conn;
 	
@@ -29,18 +33,24 @@ public class ClientsDAO extends DAO {
 		return clientsDAO;
 	}
 	
-	public Client getClientByUsername(String username){
-		return addClientData();
-		
+	public Client getClientByUsername(String username, String password){
+		return addClientData(username, password);
 	}
 	
-	private Client addClientData(){
+	private Client addClientData(String username, String password){
 		Client c = new Level1Clients();
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement(queryForAllClientData);
+			ps = conn.prepareStatement(queryForAllClientDataForOneUser);
+			int i=1;
+			ps.setString(i++, username);
+			ps.setString(i++, password);
 			ResultSet rs = ps.executeQuery();
-		
+			
+			if(ClientTypes.getClientType(rs.getString("clientType")).equals(ClientTypes.LEVEL2)){
+				c = new Level2Clients();
+				addLevel2Data(c,username);
+			}
 			c.setLoginCredentials(new LoginCredentials(rs.getString("username"),rs.getString("password"), ClientTypes.getClientType(rs.getString("clientType"))));
 			c.setFirstName(rs.getString("firstName"));
 			c.setFirstName(rs.getString("lastName"));
@@ -50,18 +60,15 @@ public class ClientsDAO extends DAO {
 			e.printStackTrace();
 		}
 		
-		addLevel1Data(c);
-		
-		if(c.getLoginCredentials().getType().equals(ClientTypes.LEVEL2)){
-			addLevel2Data(c);
-		}
-		
+		addLevel1Data(c, username);
 		return c;
 	}
-	private void addLevel1Data(Client client){
+	private void addLevel1Data(Client client, String username){
 		Level1Clients l1c = (Level1Clients)(client);
 		try {
-			PreparedStatement ps = conn.prepareStatement(queryForAllLevel1Data);
+			PreparedStatement ps = conn.prepareStatement(queryForAllLevel1DataForOneUser);
+			int i=1;
+			ps.setString(i++, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				l1c.addAnswer(rs.getLong("answerID"));
@@ -71,10 +78,12 @@ public class ClientsDAO extends DAO {
 			e.printStackTrace();
 		}
 	}
-	private void addLevel2Data(Client client){
+	private void addLevel2Data(Client client, String username){
 		Level2Clients l2c = (Level2Clients)(client);
 		try {
-			PreparedStatement ps = conn.prepareStatement(queryForAllLevel2Data);
+			PreparedStatement ps = conn.prepareStatement(queryForAllLevel2DataForOneUser);
+			int i=1;
+			ps.setString(i++, username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				l2c.addAnswer(rs.getLong("formID"));
