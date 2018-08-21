@@ -11,7 +11,7 @@ public class DAO {
 	
 	private String dbURL, password, userID;
 	private SQLServerConnectionPoolDataSource ds;
-	private PooledConnection pc;
+	protected PooledConnection pc;
 	
 	public void setDAO(String dbURL, String password, String userID) throws SQLException{
 		if (this.dbURL==null || this.password== null || this.userID==null) {

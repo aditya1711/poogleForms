@@ -19,10 +19,10 @@ public class Level2Clients extends Level1Clients {
 	public void addCreatedForm(Long formID){
 		formsCreatedIDs.add(formID);
 	}
-	public Form getForm(Long ID){
+	/*public Form getForm(Long ID){
 		if(formsCreatedIDs.contains(ID)){
 			return FormDAO.getDAO.getForm(ID);
 		}
-	}
+	}*/
 }
  

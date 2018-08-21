@@ -29,10 +29,10 @@ public class Level1Clients extends ClientAbstract {
 		answerIDs.add(answerID);
 	}
 	
-	public Answer getAnswer(Long answerID){
+	/*public Answer getAnswer(Long answerID){
 		if(answerIDs.contains(answerID)){
 			return AnswersDAO.getDAO().getAnswer(answerID);
 		}
 		return null;
-	}
+	}*/
 }
