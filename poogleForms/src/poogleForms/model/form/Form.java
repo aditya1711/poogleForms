@@ -19,7 +19,9 @@ public class Form implements IDAble<Long> {
 	String name;
 	String adminUsername;
 	
-	public static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+	public Form(){
+		
+	}
 	
 	public String getName() {
 		return name;
@@ -54,7 +56,7 @@ public class Form implements IDAble<Long> {
 	@Override
 	public void setID(Long ID) {
 		// TODO Auto-generated method stub
-		ID = ID;
+		this.ID = ID;
 	}
 
 	public String getAdminUsername() {
@@ -89,9 +91,14 @@ public class Form implements IDAble<Long> {
 		ID = 0;
 	}
 	
-	public String toJSONString() throws JsonProcessingException{
-		return ow.writeValueAsString(this);
+	public String toString(){
+		String s = new String();
+		s= "\nFormID: " + getID() + "\n"
+				+ "FormName: " + getName() + "\n";
+		for(int i=0;i<list.size();i++){
+			s = s + list.get(i).toString();
+		}
+		return s;
 	}
-	
 	
 }

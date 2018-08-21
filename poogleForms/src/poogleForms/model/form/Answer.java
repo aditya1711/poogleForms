@@ -23,7 +23,6 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 
 	public void setQuestionID(Long questionID) {
 		this.questionID = questionID;
-		belongedQuestion = FormDAO.getQuestion(getQuestionID());
 	}
 
 	public String getUsername() {

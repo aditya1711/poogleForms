@@ -88,7 +88,7 @@ public class TextTypeQuestion implements Question{
 	}
 	
 	public String toString(){
-		return "Question Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + "\n";
+		return "\nQuestion Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + "\n";
 	}
 	
 	public static Question getQuestionFromJSONString(String JSONString) throws JsonParseException, JsonMappingException, IOException{

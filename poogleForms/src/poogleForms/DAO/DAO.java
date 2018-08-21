@@ -7,33 +7,38 @@ import javax.sql.PooledConnection;
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 
 public class DAO {
-	private static DAO dao = new DAO();
 	
 	private String dbURL, password, userID;
 	private SQLServerConnectionPoolDataSource ds;
-	protected PooledConnection pc;
+	public PooledConnection pc;
 	
-	public void setDAO(String dbURL, String password, String userID) throws SQLException{
-		if (this.dbURL==null || this.password== null || this.userID==null) {
-			dao.setDbURL(dbURL);
-			dao.setPassword(password);
-			dao.setUserID(userID);
-			dao.setUpDB();
-		}
+	protected DAO(){
+		
 	}
 	
-	public static DAO getDAO() {
-		return dao;
+	public void setDAO(String dbURL, String userID, String password) throws SQLException{
+		if (this.dbURL==null || this.password== null || this.userID==null) {
+			System.out.println("setting DAO");
+			setDbURL(dbURL);
+			setPassword(password);
+			setUserID(userID);
+			setUpDB();
+		}
 	}
 
 	private void setUpDB() throws SQLException {
 		// TODO Auto-generated method stub
 		if(pc == null){
+			System.out.println("PC is null");
 			 ds = new SQLServerConnectionPoolDataSource();
 			 ds.setURL(getDbURL());
 			 ds.setUser(getUserID());
 			 ds.setPassword(getPassword());
+			 
 			 pc = ds.getPooledConnection();
+			 if(pc==null){
+				 System.out.println("PC IS STILL NULL");
+			 }
 		}
 	}
 
@@ -62,6 +67,9 @@ public class DAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
+		if(pc==null){
+			System.out.println("PC IS NULL IN getConnection()");
+		}
 		return pc.getConnection();
 	}
 }

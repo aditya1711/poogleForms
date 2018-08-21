@@ -48,10 +48,10 @@ public class ClientsDAO extends DAO {
 		
 	}
 	
-	public static ClientsDAO getFormDAO(String dbURL, String password, String userID) throws SQLException{
-		clientsDAO.setDAO(dbURL, password, userID);
-		clientsDAO.setFormDAO(FormDAO.getFormDAO(dbURL, password, userID));
-		clientsDAO.setAnswersDAO(AnswersDAO.getAnswersDAO(dbURL, password, userID));
+	public static ClientsDAO getFormDAO(String dbURL, String userID, String password) throws SQLException{
+		clientsDAO.setDAO(dbURL, userID, password);
+		clientsDAO.setFormDAO(FormDAO.getFormDAO(dbURL, userID, password));
+		clientsDAO.setAnswersDAO(AnswersDAO.getAnswersDAO(dbURL, userID, password));
 		return clientsDAO;
 	}
 	

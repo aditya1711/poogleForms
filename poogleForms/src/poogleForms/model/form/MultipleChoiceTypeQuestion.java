@@ -123,7 +123,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 	
 	public String toString(){
-		return "Question Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + " options: " + options.toString() + "\n";
+		return "\nQuestion Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + " options: " + options.toString() + "\n";
 	}
 	
 	public String toJSONString() throws JsonProcessingException{

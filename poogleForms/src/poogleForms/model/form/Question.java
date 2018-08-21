@@ -8,7 +8,9 @@ public interface Question extends IDAble<Long>, JSONConvertible{
 	
 	public static  ObjectMapper mapper = new ObjectMapper();
 	public long getFormID();
+	public void setFormID(long formID);
 	public String getPrompt();
+	public void setPrompt(String prompt);
 	public TYPES_OF_QUESTION getType();
 	public String getHandler();
 	
