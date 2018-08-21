@@ -20,7 +20,7 @@ public class AnswersDAO extends DAO{
 	public static  ObjectMapper mapper = new ObjectMapper();
 	
 	private static final String queryForGetingAnswerIDsWithUsername = "";
-	private static final String queryForGetingAnswerWithID ="";
+	private static final String queryForGetingAnswerWithID ="select ID, answerJson from answers where ID=?;";
 	
 	private AnswersDAO(){
 		
