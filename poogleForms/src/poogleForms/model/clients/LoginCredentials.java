@@ -28,5 +28,8 @@ public class LoginCredentials {
 	public void setType(ClientTypes type) {
 		this.type = type;
 	}
+	public String toString(){
+		return "username: " + getUsername() + " Password: " + getPassword() + " clientType: " + getType() ;
+	}
 	
 }

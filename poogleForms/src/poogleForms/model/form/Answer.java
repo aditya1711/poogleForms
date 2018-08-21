@@ -1,7 +1,9 @@
 package poogleForms.model.form;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import poogleForms.DAO.FormDAO;
@@ -14,8 +16,25 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 	private Question belongedQuestion;
 	public String username;
 	
+	static String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+	static String DB_User = "sa";
+	static String DB_Password = "Welcome@1234";
+	@JsonIgnore
 	public Long ID;
 	ArrayList<String> answers;
+	
+	private static FormDAO formDAO;
+	
+	static{
+		try {
+			formDAO = FormDAO.getFormDAO(DB_URL, DB_User, DB_Password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public Long getQuestionID() {
 		return questionID;
@@ -23,6 +42,7 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 
 	public void setQuestionID(Long questionID) {
 		this.questionID = questionID;
+		belongedQuestion = formDAO.getQuestion(questionID);
 	}
 
 	public String getUsername() {
@@ -48,13 +68,13 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 		return ow.writeValueAsString(this);
 	}
 
-	@Override
+	@Override @JsonIgnore
 	public Long getID() {
 		// TODO Auto-generated method stub
 		return ID;
 	}
 
-	@Override
+	@Override @JsonIgnore
 	public void setID(Long t) {
 		// TODO Auto-generated method stub
 		ID=t;

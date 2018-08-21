@@ -35,4 +35,16 @@ public class Level1Clients extends ClientAbstract {
 		}
 		return null;
 	}*/
+	public String toString(){
+		String s ="";
+		s = getLoginCredentials().toString() + "\n"
+				+ "Name " + getFirstName() + " " + getLastName() + "\n"
+						+ "AnswerIDs: ";
+		s= s + answerIDs.toString();
+		/*Iterator<Long> it = answerIDs.iterator();
+		while(it.hasNext()){
+			
+		}*/
+		return s;
+	}
 }

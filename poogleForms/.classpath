@@ -15,9 +15,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="E:/gitLocal/poogleFormsExpt/poogleFormsExpt/WebContent/WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="E:/gitLocal/poogleFormsExpt/poogleFormsExpt/WebContent/WEB-INF/lib/standard.jar"/>
-	<classpathentry kind="lib" path="E:/gitLocal/poogleForms/poogleForms/WebContent/WEB-INF/lib/jackson-annotations-2.9.6.jar"/>
-	<classpathentry kind="lib" path="E:/gitLocal/poogleForms/poogleForms/WebContent/WEB-INF/lib/jackson-core-2.9.6.jar"/>
-	<classpathentry kind="lib" path="E:/gitLocal/poogleForms/poogleForms/WebContent/WEB-INF/lib/jackson-databind-2.9.6.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MicrosoftSQL_JDBC"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -5,6 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 public interface JSONConvertible {
-	public static ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+	public static ObjectWriter ow = new ObjectMapper().writer();
 	public String toJSONString() throws JsonProcessingException;
 }

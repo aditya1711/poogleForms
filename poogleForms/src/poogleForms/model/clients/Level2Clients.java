@@ -24,5 +24,8 @@ public class Level2Clients extends Level1Clients {
 			return FormDAO.getDAO.getForm(ID);
 		}
 	}*/
+	public String toString(){
+		return super.toString() + "\nFormsCreated: " + formsCreatedIDs.toString();
+	}
 }
  

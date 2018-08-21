@@ -16,14 +16,14 @@ public class ClientsDAO extends DAO {
 	
 	private static final String queryForAllClientData = "select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from loginCredentials as lc inner join client as c on c.username = lc.username;"; 
 	
-	private static final String queryForAllClientDataForOneUser = "select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from (loginCredentials as lc inner join client as c on c.username = lc.username)" + 
+	private static final String queryForAllClientDataForOneUser = "select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from (loginCredentials as lc inner join client as c on c.username = lc.username) " + 
 																		"where lc.username = ? and lc.password = ?";
 	
-	private static final String queryToCheckForUsernamePasswordPair = "use poogleForms" +
-																			"if exists(select username from loginCredentials where username= ? and password= ?)" +
-																				"select 1;" +
-																					"else" +
-																						"select 0;";
+	private static final String queryToCheckForUsernamePasswordPair = "use poogleForms " +
+																			"if exists(select username from loginCredentials where username= ? and password= ?) " +
+																				"select 1; " +
+																					"else " +
+																						"select 0; ";
 	
 	private FormDAO formDAO;
 	private AnswersDAO answersDAO;
@@ -48,7 +48,7 @@ public class ClientsDAO extends DAO {
 		
 	}
 	
-	public static ClientsDAO getFormDAO(String dbURL, String userID, String password) throws SQLException{
+	public static ClientsDAO getClientDAO(String dbURL, String userID, String password) throws SQLException{
 		clientsDAO.setDAO(dbURL, userID, password);
 		clientsDAO.setFormDAO(FormDAO.getFormDAO(dbURL, userID, password));
 		clientsDAO.setAnswersDAO(AnswersDAO.getAnswersDAO(dbURL, userID, password));
@@ -68,6 +68,7 @@ public class ClientsDAO extends DAO {
 			ps.setString(i++, username);
 			ps.setString(i++, password);
 			ResultSet rs = ps.executeQuery();
+			rs.next();
 			
 			if(ClientTypes.getClientType(rs.getString("clientType")).equals(ClientTypes.LEVEL2)){
 				c = new Level2Clients();
@@ -75,7 +76,7 @@ public class ClientsDAO extends DAO {
 			}
 			c.setLoginCredentials(new LoginCredentials(rs.getString("username"),rs.getString("password"), ClientTypes.getClientType(rs.getString("clientType"))));
 			c.setFirstName(rs.getString("firstName"));
-			c.setFirstName(rs.getString("lastName"));
+			c.setLastName(rs.getString("lastName"));
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
