@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import poogleForms.model.clients.Client;
+import poogleForms.model.clients.ClientAbstract;
 import poogleForms.model.clients.ClientTypes;
 import poogleForms.model.clients.Level1Clients;
 import poogleForms.model.clients.Level2Clients;
@@ -24,6 +25,30 @@ public class ClientsDAO extends DAO {
 																				"select 1; " +
 																					"else " +
 																						"select 0; ";
+	
+	
+	private static final String queryToInsertClientSpecificDetails = "begin try " + 
+			"begin transaction " +
+			"insert into client(username, firstName, lastname) " +
+			"values  ((select username from loginCredentials where username = ?), ?,?); " +
+			"commit; " +
+			"end try " +
+			"begin catch " +
+			"rollback; " +
+			"end catch; " ;
+	private static final String queryToInsertLoginCredentials = "begin try " + 
+			"begin transaction " +
+			"insert into loginCredentials(username, password, clientType) " +
+			"values(?,?, (select clientType from clientTypes where clientType = ?)); " +
+			"commit; " +
+			"end try " +
+			"begin catch " +
+			"rollback; " +
+			"end catch; " ;
+	
+	private ClientsDAO(){
+		
+	}
 	
 	private FormDAO formDAO;
 	private AnswersDAO answersDAO;
@@ -44,9 +69,7 @@ public class ClientsDAO extends DAO {
 		this.formDAO = formDAO;
 	}
 
-	private ClientsDAO(){
-		
-	}
+	
 	
 	public static ClientsDAO getClientDAO(String dbURL, String userID, String password) throws SQLException{
 		clientsDAO.setDAO(dbURL, userID, password);
@@ -96,6 +119,7 @@ public class ClientsDAO extends DAO {
 		
 	}
 
+	
 	public boolean checkForUsernamePasswordPair(String username, String password){
 		try(Connection conn = pc.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(queryToCheckForUsernamePasswordPair);
@@ -114,5 +138,38 @@ public class ClientsDAO extends DAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	
+	public void addClientToDB(ClientAbstract client){
+		addLoginCredentialsToDB(client.getLoginCredentials());
+		
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryToInsertClientSpecificDetails);
+			int i=1;
+			ps.setString(i++, client.getLoginCredentials().getUsername());
+			ps.setString(i++, client.getFirstName());
+			ps.setString(i++, client.getLastName());
+			
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void addLoginCredentialsToDB(LoginCredentials lc){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryToInsertLoginCredentials);
+			int i=1;
+			ps.setString(i++, lc.getUsername());
+			ps.setString(i++, lc.getPassword());
+			ps.setString(i++, lc.getType().getDBName());
+			
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

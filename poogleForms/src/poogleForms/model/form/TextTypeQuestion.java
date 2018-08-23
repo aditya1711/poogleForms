@@ -28,9 +28,8 @@ public class TextTypeQuestion implements Question{
 		super();
 	}
 	
-	public TextTypeQuestion(long formID, String prompt) {
+	public TextTypeQuestion(String prompt) {
 		super();
-		this.formID = formID;
 		this.prompt = prompt;
 	}
 	

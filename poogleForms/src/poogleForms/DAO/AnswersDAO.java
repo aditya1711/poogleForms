@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,8 +20,20 @@ public class AnswersDAO extends DAO{
 	
 	public static  ObjectMapper mapper = new ObjectMapper();
 	
-	private static final String queryForGetingAnswerIDsWithUsername = "";
-	private static final String queryForGetingAnswerWithID ="select ID, answerJson from answers where ID=?;";
+	private static final String queryForGetingAnswerIDsWithUsername = "select ID as answerID, answerJson from answers where json_value(answerJson, '$.username')  = ?;";
+	private static final String queryForGetingAnswerWithID ="select ID as answerID, answerJson from answers where ID=?;";
+	
+	private static final String queryForInsertingAnswer  =  "begin try " + 
+			"begin transaction " + 
+			"insert into IDTable " + 
+			"values ('3'); " +
+			"insert into answers (ID,answerJson) " + 
+			"values (SCOPE_IDENTITY(),?); " +
+			"commit; " +
+			"end try " +
+			"begin catch " +
+			"rollback; " +
+			"end catch; " ;
 	
 	private AnswersDAO(){
 		
@@ -54,8 +67,9 @@ public class AnswersDAO extends DAO{
 			ps.setLong(i++,ID);
 			ResultSet rs= ps.executeQuery();
 			rs.next();
-			Answer answer = mapper.readValue(rs.getString("jsonString"), Answer.class);
+			Answer answer = mapper.readValue(rs.getString("answerJson"), Answer.class);
 			answer.setID(rs.getLong("answerID"));
+			return answer;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,5 +84,19 @@ public class AnswersDAO extends DAO{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void addAnswerInDB(Answer ans){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryForInsertingAnswer);
+			int i=1;
+			ps.setString(i++, ans.toJSONString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

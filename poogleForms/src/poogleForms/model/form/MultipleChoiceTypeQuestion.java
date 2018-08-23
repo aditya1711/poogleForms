@@ -19,7 +19,7 @@ import poogleForms.model.form.TYPES_OF_QUESTION;
 
 public class MultipleChoiceTypeQuestion implements Question {
 	
-	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICES;
+	public static final TYPES_OF_QUESTION QUESTION_TYPE = TYPES_OF_QUESTION.MULTIPLE_CHOICE_QUESTION;
 	public Long ID;
 	
 	public static long idTemp= 5000;
@@ -60,11 +60,29 @@ public class MultipleChoiceTypeQuestion implements Question {
 		
 	}
 	
+	public MultipleChoiceTypeQuestion(String prompt, ArrayList<String> options) {
+		super();
+		this.prompt = prompt;
+		this.options = options;
+		//to-do
+		ID= ++idTemp;
+		
+	}
+	
 	public MultipleChoiceTypeQuestion(String prompt, String[] options, long formID) {
 		super();
 		this.prompt = prompt;
 		this.options = new ArrayList<String>(Arrays.asList(options));
 		this.formID = formID;
+		//to-do
+		ID= ++idTemp;
+		
+	}
+	
+	public MultipleChoiceTypeQuestion(String prompt, String[] options) {
+		super();
+		this.prompt = prompt;
+		this.options = new ArrayList<String>(Arrays.asList(options));
 		//to-do
 		ID= ++idTemp;
 		
@@ -123,7 +141,7 @@ public class MultipleChoiceTypeQuestion implements Question {
 	}
 	
 	public String toString(){
-		return "\nQuestion Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + " options: " + options.toString() + "\n";
+		return "FormId: " + getFormID() + "\nQuestion Type: " + QUESTION_TYPE +  " prompt: " + getPrompt() + " options: " + options.toString() + "\n";
 	}
 	
 	public String toJSONString() throws JsonProcessingException{

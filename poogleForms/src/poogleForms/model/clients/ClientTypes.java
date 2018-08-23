@@ -10,4 +10,13 @@ public enum ClientTypes {
 		else 
 			return null;
 	}
+	public String getDBName(){
+		if(this.equals(LEVEL1)){
+			return "level1";
+		}
+		else if(this.equals(LEVEL2)){
+			return "level2";
+		}
+		else return null;
+	}
 }

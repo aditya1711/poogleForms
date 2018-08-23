@@ -59,11 +59,11 @@ public class CreateForm extends HttpServlet {
 			if(parameterName.matches("/[questionNumber]/") || parameterName.contains("questionNumber")){
 				if(parameterName.endsWith("MCQ")){
 					System.out.println("MCQ match found");
-					qList.add(new MultipleChoiceTypeQuestion(45454,parameterValue));
+					qList.add(new MultipleChoiceTypeQuestion(0, parameterValue));
 				}
 				else if(parameterName.endsWith("Text")){
 					System.out.println("Text match found");
-					qList.add(new TextTypeQuestion(5646546, parameterValue));
+					qList.add(new TextTypeQuestion(parameterValue));
 				}
 			}
 			else if(parameterName.matches("/[option@]/") || parameterName.contains("option@")){

@@ -1,5 +1,6 @@
 package poogleForms.DAO;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import poogleForms.model.form.Form;
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
+import poogleForms.model.form.TYPES_OF_QUESTION;
 import poogleForms.model.form.TextTypeQuestion;
 
 public class FormDAO extends DAO {
@@ -21,8 +23,34 @@ public class FormDAO extends DAO {
 	private static final String queryForGetingQuestionsWithFormID = "select prompt, type as questionType, formID, ID as questionID, options from questions where formID = ?";
 	private static final String queryForGetingFormIDsWithUsername = "select ID as formID from forms where username=?;";
 	
-	protected FormDAO(){
-		super();
+	private static final String queryForInsertingQuestion = "begin try " + 
+			"begin transaction " + 
+			"insert into IDTable " + 
+			"values ('1'); " +
+			"insert into questions (prompt, type, formID, options, ID) " + 
+			"values (?,(select questionType from questionTypes where questionType = ?),(select ID from forms where ID = ?),?, SCOPE_IDENTITY()); " +
+			"commit; " +
+			"end try " +
+			"begin catch " +
+			"rollback; " +
+			"end catch; " ;
+	private static final String queryForInsertingFormSpecificDetatils = "begin try " + 
+			"begin transaction " + 
+			"insert into IDTable " + 
+			"values ('1'); " + 
+			"declare @formID int " + 
+			"set @formID = scope_identity() "+
+			"insert into forms (name, username, ID) " +
+			"values (?,(select username from client where username=?), @formID); " +
+			"select @formID as formID " +
+			"commit; " +
+			"end try " +
+			"begin catch " +
+			"rollback; " +
+			"end catch; " ;
+	
+	private FormDAO(){
+	
 	}
 
 	
@@ -134,6 +162,110 @@ public class FormDAO extends DAO {
 			e.printStackTrace();
 		}
 		return q;
+	}
+
+	private void addQuestionToBatch(Question q, PreparedStatement ps){
+		int i=1;
+		try {
+			ps.setString(i++, q.getPrompt());
+			ps.setString(i++, q.getType().getDBName());
+			ps.setLong(i++, q.getFormID());
+			
+			String options = "";
+			if(q.getType().equals(TYPES_OF_QUESTION.MULTIPLE_CHOICE_QUESTION)){
+				System.out.println("mcq found in form: " + q.getFormID());
+				MultipleChoiceTypeQuestion mcq =(MultipleChoiceTypeQuestion)q;
+				
+				for(int index = 0;index<mcq.getOptions().size();index++){
+					options = options + mcq.getOptions().get(index) + ";";
+				}
+			}
+			else if(q.getType().equals(TYPES_OF_QUESTION.TEXT_QUESTIONS)){
+				options = "";
+			}
+			ps.setString(i++, options);
+			ps.addBatch();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void addQuestionToDB(Question q){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryForInsertingQuestion);
+			
+			int i=1;
+			ps.setString(i++, q.getPrompt());
+			ps.setString(i++, q.getType().getDBName());
+			ps.setLong(i++, q.getFormID());
+			
+			String options = "";
+			if(q.getType().equals(TYPES_OF_QUESTION.MULTIPLE_CHOICE_QUESTION)){
+				System.out.println("mcq found in form: " + q.getFormID());
+				MultipleChoiceTypeQuestion mcq =(MultipleChoiceTypeQuestion)q;
+				
+				for(int index = 0;index<mcq.getOptions().size();index++){
+					options = options + mcq.getOptions().get(index) + ";";
+				}
+			}
+			else if(q.getType().equals(TYPES_OF_QUESTION.TEXT_QUESTIONS)){
+				options = "";
+			}
+			ps.setString(i++, options);
+			ps.executeQuery();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void addQuestionsToDB(ArrayList<Question> questions){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryForInsertingQuestion);
+			for(int i=0;i<questions.size();i++){
+				addQuestionToBatch(questions.get(i), ps);
+			}
+			ps.executeBatch();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Long addFormToDB(Form f){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps =conn.prepareStatement(queryForInsertingFormSpecificDetatils,Statement.RETURN_GENERATED_KEYS);
+			
+			int i=1;
+			ps.setString(i++, f.getName());
+			ps.setString(i++, f.getAdminUsername());
+			
+			
+			ResultSet rs  = ps.executeQuery();
+			
+			Long formID = (long) 0;
+			while(rs.next()){
+				formID = rs.getLong("formID");
+				System.out.println("Form ID entered: " + formID);
+			}
+			
+			
+			for(int j=0;j<f.getList().size();j++){
+				f.getList().get(j).setFormID(formID);
+			}
+			addQuestionsToDB(f.getList());
+			return formID;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

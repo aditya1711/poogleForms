@@ -83,7 +83,9 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 	public String toString(){
 		return "QuestionID: " + getQuestionID() + "\n"
 				+ "Question: " + belongedQuestion.getPrompt() + "\n"
-						+ "Answer: " + answers.toString() + "\n";
+						+ "Username: " + getUsername() + "\n"
+							+ "AnswerID: " + getID() + "\n"
+								+ "Answer: " + answers.toString() + "\n";
 	}
 	
 }

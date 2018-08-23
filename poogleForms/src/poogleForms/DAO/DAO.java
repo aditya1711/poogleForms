@@ -36,9 +36,6 @@ public class DAO {
 			 ds.setPassword(getPassword());
 			 
 			 pc = ds.getPooledConnection();
-			 if(pc==null){
-				 System.out.println("PC IS STILL NULL");
-			 }
 		}
 	}
 

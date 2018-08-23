@@ -1,16 +1,16 @@
 package poogleForms.model.form;
 
 public enum TYPES_OF_QUESTION {
-	MULTIPLE_CHOICES, TEXT_QUESTIONS;
-	public TYPES_OF_QUESTION getType(Question q){
-		if(q instanceof MultipleChoiceTypeQuestion){
-			return MULTIPLE_CHOICES;
+	MULTIPLE_CHOICE_QUESTION, TEXT_QUESTIONS;
+	
+	public String getDBName(){
+		if(this.equals(MULTIPLE_CHOICE_QUESTION)){
+			return "mcq";
 		}
-		else if(q instanceof TextTypeQuestion){
-			return TEXT_QUESTIONS;
+		else if(this.equals(TEXT_QUESTIONS)){
+			return "textType";
 		}
-		else{
-			return null;
-		}
+		else return null;
 	}
+	
 }
