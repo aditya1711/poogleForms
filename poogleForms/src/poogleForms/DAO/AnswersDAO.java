@@ -91,6 +91,8 @@ public class AnswersDAO extends DAO{
 			PreparedStatement ps = conn.prepareStatement(queryForInsertingAnswer);
 			int i=1;
 			ps.setString(i++, ans.toJSONString());
+			
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -39,6 +39,7 @@ public class CreateForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.getSession().setAttribute("adminUsername", "adminHaha");
+		
 		request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
 		
 	}

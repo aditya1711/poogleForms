@@ -1,6 +1,7 @@
 package poogleForms.controller.form;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import poogleForms.DAO.FormDAO;
 import poogleForms.model.form.*;
 
 /**
@@ -33,7 +35,10 @@ public class FormHandler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    static Form f;
+    
+    FormDAO formDAO ;
+    
+   /* static Form f;
     static{
     	System.out.println("forma handler opened");
 		Question q1 = new MultipleChoiceTypeQuestion("How do you laugh?", new String[] {"haha", "hehe", "help"}, 15478);
@@ -42,12 +47,12 @@ public class FormHandler extends HttpServlet {
 		qs.add(q1);
 		qs.add(q2);
 		
-		/*try {
+		try {
 			System.out.println(f.toJSONString());
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		try {
 			System.out.println(q2.toJSONString());
 			q2 = TextTypeQuestion.getQuestionFromJSONString(q2.toJSONString());
@@ -67,11 +72,32 @@ public class FormHandler extends HttpServlet {
 			e.printStackTrace();
 		}
 		f = new Form("form how do",qs,"hahaAdmin");
+    }*/
+    
+    public void init(){
+    	/*ServletContext ctx = getServletContext();
+    	try {
+			formDAO = FormDAO.getFormDAO(ctx.getAttribute("DB_URL").toString(), ctx.getAttribute("DB_Username").toString(), ctx.getAttribute("DB_Password").toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB initialzters errors");
+			e.printStackTrace();
+		}*/
+    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+		String DB_User = "sa";
+		String DB_Password = "Welcome@1234";
+		try {
+			formDAO = FormDAO.getFormDAO(DB_URL, DB_User, DB_Password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
 		request.setAttribute("form", f);
 		request.getRequestDispatcher("FormHandler.jsp").include(request, response);
 		

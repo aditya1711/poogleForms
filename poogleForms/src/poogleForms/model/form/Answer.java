@@ -1,29 +1,30 @@
 package poogleForms.model.form;
 
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import poogleForms.DAO.FormDAO;
+//import poogleForms.DAO.FormDAO;
 import poogleForms.model.misc.IDAble;
 import poogleForms.model.misc.JSONConvertible;
 
 public class Answer implements IDAble<Long>, JSONConvertible {
 	
 	public Long questionID;
-	private Question belongedQuestion;
+	//private Question belongedQuestion;
 	public String username;
 	
-	static String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+	/*static String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 	static String DB_User = "sa";
-	static String DB_Password = "Welcome@1234";
+	static String DB_Password = "Welcome@1234";*/
+	
 	@JsonIgnore
 	public Long ID;
 	ArrayList<String> answers;
 	
-	private static FormDAO formDAO;
+	/*private static FormDAO formDAO;
 	
 	static{
 		try {
@@ -32,7 +33,7 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
 	
@@ -40,10 +41,10 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 		return questionID;
 	}
 
-	public void setQuestionID(Long questionID) {
+	/*public void setQuestionID(Long questionID) {
 		this.questionID = questionID;
 		belongedQuestion = formDAO.getQuestion(questionID);
-	}
+	}*/
 
 	public String getUsername() {
 		return username;
@@ -82,7 +83,7 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 	
 	public String toString(){
 		return "QuestionID: " + getQuestionID() + "\n"
-				+ "Question: " + belongedQuestion.getPrompt() + "\n"
+				//+ "Question: " + belongedQuestion.getPrompt() + "\n"
 						+ "Username: " + getUsername() + "\n"
 							+ "AnswerID: " + getID() + "\n"
 								+ "Answer: " + answers.toString() + "\n";

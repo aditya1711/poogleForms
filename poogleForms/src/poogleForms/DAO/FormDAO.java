@@ -23,6 +23,8 @@ public class FormDAO extends DAO {
 	private static final String queryForGetingQuestionsWithFormID = "select prompt, type as questionType, formID, ID as questionID, options from questions where formID = ?";
 	private static final String queryForGetingFormIDsWithUsername = "select ID as formID from forms where username=?;";
 	
+	private static final String queryForGetingAllFormIDs ="select ID as formID from forms; ";
+	
 	private static final String queryForInsertingQuestion = "begin try " + 
 			"begin transaction " + 
 			"insert into IDTable " + 
@@ -48,6 +50,10 @@ public class FormDAO extends DAO {
 			"begin catch " +
 			"rollback; " +
 			"end catch; " ;
+	
+	private static final String queryForUpdatingFormName ="";
+	private static final String queryForDeletingQuestion = "";
+	private static final String queryForDeletingForm = "";
 	
 	private FormDAO(){
 	
@@ -75,6 +81,23 @@ public class FormDAO extends DAO {
 		}
 		return formIDs;
 	}
+	
+	public HashSet<Long> getAllFormIDs(){
+		HashSet<Long> formIDs = new HashSet<Long>();
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryForGetingAllFormIDs);
+			
+			ResultSet rs= ps.executeQuery();
+			while(rs.next()){
+				formIDs.add(rs.getLong("formID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return formIDs;
+	}
+	
 	
 	public Form getForm(Long ID){
 		Form form = new Form();
@@ -268,4 +291,47 @@ public class FormDAO extends DAO {
 		return null;
 	}
 
+	public void updateFormName(Long formID, String formName){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps =conn.prepareStatement(queryForUpdatingFormName);
+			
+			int i=1;
+			ps.setLong(i++, formID);
+			ps.setString(i++, formName);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteQuestion(Long questionID){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps =conn.prepareStatement(queryForDeletingQuestion);
+			
+			int i=1;
+			ps.setLong(i++, questionID);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteForm(Long formID){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps =conn.prepareStatement(queryForDeletingForm);
+			
+			int i=1;
+			ps.setLong(i++, formID);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
