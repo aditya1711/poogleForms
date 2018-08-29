@@ -12,16 +12,29 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<div id = "header">
+		<c:import url="header.jsp"></c:import>
+	</div>
+	<div id="userDisplay">
+		<c:import url="userHeader.jsp"></c:import>
+	</div>
+	<div id ="allPageFunctionalities">
+		<c:import url="allPageFunctionalities.jsp"></c:import>
+	</div>
+
+	<div id = "formDisplay">
+		<h1>Form: ${form.name}</h1>
+		<h2>Answer:</h2>
+		<form method="post" >
+		<c:forEach var="ques" items = "${form.list}">
+			<c:set var="currQuestion" scope = "request" value = "${ques}"  />
+			<c:import url = "${currQuestion.handler}"></c:import>
+		</c:forEach>
+		<br><br>
+		<input type="submit" value ="submit"/>
+		</form>
+	</div>
 	
-	<h1>Form: ${form.name}</h1>
-	<h2>Answer:</h2>
-	<form method="post" >
-	<c:forEach var="ques" items = "${form.list}">
-		<c:set var="currQuestion" scope = "request" value = "${ques}"  />
-		<c:import url = "${currQuestion.handler}"></c:import>
-	</c:forEach>
-	<br><br>
-	<input type="submit" value ="submit"/>
-	</form>
 </body>
 </html>

@@ -35,6 +35,10 @@ public class AnswersDAO extends DAO{
 			"rollback; " +
 			"end catch; " ;
 	
+	private static final String queryForGetingAnsweredFormIDsWithUsername ="select distinct formID " +
+			"from questions where ID in " +
+			"(select json_value(answerJson, '$.questionID') as questionID from answers where json_value(answerJson, '$.username') = ?); " ;
+	
 	private AnswersDAO(){
 		
 	}
@@ -58,6 +62,24 @@ public class AnswersDAO extends DAO{
 		}
 		
 		return answerIDs;
+	}
+	
+	public HashSet<Long> getAnsweredFormIDsWithUsername(String username){
+		HashSet<Long> formIDs = new HashSet<Long>();
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement(queryForGetingAnsweredFormIDsWithUsername);
+			int i=1;
+			ps.setString(i++,username);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next()){
+				formIDs.add(rs.getLong("formID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return formIDs;
 	}
 	
 	public Answer getAnswerWithID(Long ID){
@@ -101,4 +123,5 @@ public class AnswersDAO extends DAO{
 			e.printStackTrace();
 		}
 	}
+	
 }
