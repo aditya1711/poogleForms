@@ -4,8 +4,7 @@
 
 <button onclick="goToDashBoard()">Take A Survey</button>
 <button id ="level2ClientButton" onclick= "goToAdminPage()">BY THE POWER OF THEE</button>
-<button onclick="goToAnswersPage()"></button>
-
+<button onclick="goToAnswersPage()">View Answered Forms</button>
 <script>
 	$(document).ready(function(){
 		var x= "${client.loginCredentials.type}";
@@ -16,8 +15,8 @@
 	});
 </script>
 <script>
-	function() goToAnswersPage(){
-		window.location.assign("viewAnwers.jsp");
+	function goToAnswersPage(){
+		window.location.assign("ViewAnsweredForms");
 	}
 	function goToAdminPage(){
 		window.location.assign("level2page.jsp");

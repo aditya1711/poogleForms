@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import poogleForms.DAO.AnswersDAO;
+import poogleForms.DAO.FormDAO;
+import poogleForms.model.clients.Client;
 import poogleForms.model.form.*;
 
 /**
@@ -23,13 +27,34 @@ import poogleForms.model.form.*;
 @WebServlet("/CreateForm")
 public class CreateForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private FormDAO formDAO;        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public CreateForm() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    public void init(){
+    	/*ServletContext ctx = getServletContext();
+    	try {
+			formDAO = FormDAO.getFormDAO(ctx.getAttribute("DB_URL").toString(), ctx.getAttribute("DB_Username").toString(), ctx.getAttribute("DB_Password").toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB initialzters errors");
+			e.printStackTrace();
+		}*/
+    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+		String DB_User = "sa";
+		String DB_Password = "Welcome@1234";
+		try {
+			formDAO = FormDAO.getFormDAO(DB_URL, DB_User, DB_Password);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	/**
@@ -38,9 +63,8 @@ public class CreateForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getSession().setAttribute("adminUsername", "adminHaha");
-		
 		request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
+		
 		
 	}
 
@@ -76,9 +100,9 @@ public class CreateForm extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		Map<Long,Form> formMap = (Map<Long, Form>) session.getAttribute("createdFormList");
-		Form f= new Form(request.getParameter("formName"), qList, (String)session.getAttribute("adminUsername"));
-		//formMap.put(f.getID(),f);
+		Form f= new Form(request.getParameter("formName"), qList, ((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+		
+		formDAO.addFormToDB(f);
 		
 	}
 

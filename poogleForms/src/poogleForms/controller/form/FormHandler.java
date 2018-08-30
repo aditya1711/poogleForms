@@ -3,18 +3,18 @@ package poogleForms.controller.form;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
+import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
+import poogleForms.model.clients.Client;
 import poogleForms.model.form.*;
 
 /**
@@ -37,42 +37,7 @@ public class FormHandler extends HttpServlet {
 	 */
     
     FormDAO formDAO ;
-    
-   /* static Form f;
-    static{
-    	System.out.println("forma handler opened");
-		Question q1 = new MultipleChoiceTypeQuestion("How do you laugh?", new String[] {"haha", "hehe", "help"}, 15478);
-		Question q2 = new TextTypeQuestion("How do you cry?", 15479);
-		ArrayList<Question> qs = new ArrayList<Question>();
-		qs.add(q1);
-		qs.add(q2);
-		
-		try {
-			System.out.println(f.toJSONString());
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			System.out.println(q2.toJSONString());
-			q2 = TextTypeQuestion.getQuestionFromJSONString(q2.toJSONString());
-			System.out.println(q2.toString());
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		f = new Form("form how do",qs,"hahaAdmin");
-    }*/
+    AnswersDAO answersDAO;
     
     public void init(){
     	/*ServletContext ctx = getServletContext();
@@ -88,6 +53,7 @@ public class FormHandler extends HttpServlet {
 		String DB_Password = "Welcome@1234";
 		try {
 			formDAO = FormDAO.getFormDAO(DB_URL, DB_User, DB_Password);
+			answersDAO = AnswersDAO.getAnswersDAO(DB_URL, DB_User, DB_Password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,15 +63,19 @@ public class FormHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		
 		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+		Map<Long,Answer> answers = answersDAO.getAnswersWithUsernameAndFormID(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), f.getID());
+		
 		request.setAttribute("form", f);
+		request.setAttribute("answersMap", answers);
+		
+		System.out.println(answers);
+		
 		request.getRequestDispatcher("FormHandler.jsp").include(request, response);
 		
-		ArrayList<Question> qs = f.getList();
-		for(int i=0;i<qs.size();i++){
-			System.out.println("question ID: " + qs.get(i).getID());
-			System.out.println("from forms handler------> "+request.getParameter(Long.toString(qs.get(i).getID())));
-		}
+		
 		
 	}
 
@@ -114,7 +84,28 @@ public class FormHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = (HttpSession)request.getSession();
+		
+		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+		ArrayList<Question> qs = f.getList();
+		
+		for(int i=0;i<qs.size();i++){
+			System.out.println("question ID: " + qs.get(i).getID());
+			String answer = request.getParameter(Long.toString(qs.get(i).getID()));
+			System.out.println("answer string: " + answer);
+			if(!(answer==null || answer=="")){
+				System.out.println("from forms handler------> "+ answer);
+				ArrayList<String> answers = new ArrayList<String>();
+				answers.add(answer);
+				Answer ans = new Answer();
+				ans.setAnswers(answers);
+				ans.setUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+				ans.setQuestionID(qs.get(i).getID());
+				
+				answersDAO.addAnswerInDB(ans);
+			}
+			
+		}
 	}
 
 }

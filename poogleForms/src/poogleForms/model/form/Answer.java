@@ -41,10 +41,10 @@ public class Answer implements IDAble<Long>, JSONConvertible {
 		return questionID;
 	}
 
-	/*public void setQuestionID(Long questionID) {
+	public void setQuestionID(Long questionID) {
 		this.questionID = questionID;
-		belongedQuestion = formDAO.getQuestion(questionID);
-	}*/
+		//belongedQuestion = formDAO.getQuestion(questionID);
+	}
 
 	public String getUsername() {
 		return username;
