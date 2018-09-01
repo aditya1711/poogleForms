@@ -73,7 +73,7 @@ public class FormHandler extends HttpServlet {
 		
 		System.out.println(answers);
 		
-		request.getRequestDispatcher("FormHandler.jsp").include(request, response);
+		request.getRequestDispatcher("viewForms.jsp").include(request, response);
 		
 		
 		

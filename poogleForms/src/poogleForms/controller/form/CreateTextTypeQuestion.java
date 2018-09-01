@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import poogleForms.model.form.Form;
 import poogleForms.model.form.Question;
+import poogleForms.model.form.TextTypeQuestion;
 
 /**
  * Servlet implementation class TextTypeQuestion
  */
-@WebServlet("/TextTypeQuestionHandler")
+@WebServlet("/CreateTextTypeQuestion")
 public class CreateTextTypeQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,10 +31,13 @@ public class CreateTextTypeQuestion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		System.out.println("textTypehandler opened");
-		request.getRequestDispatcher("TextTypeQuestionHandler.jsp").include(request, response);
+		
+		request.setAttribute("currQuestionType", "textTypeQuestion");
+		request.setAttribute("callingPage", "CreateTextTypeQuestion");
+		
+		request.getRequestDispatcher("CreateMCQ.jsp").include(request, response);
 		//System.out.println("from textType handler: " + request.getParameter(Long.toString(((Question) (request.getAttribute("currQuestion"))).getID())));
 	}
 
@@ -41,7 +46,16 @@ public class CreateTextTypeQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		TextTypeQuestion tq = new TextTypeQuestion();
+		
+		//tq.setFormID(((Form)(request.getAttribute("form"))).getID());
+		
+		tq.setPrompt(request.getParameter("questionName"));
+		
+		request.setAttribute("currQuestion", tq);
+		
+		System.out.println(request.getAttribute("currQuestion"));
+		
 	}
 
 }

@@ -16,9 +16,13 @@ public class Form implements IDAble<Long> {
 	ArrayList<Question> list;
 	long ID;
 	
-	String name;
+	String name="Untitled";
 	String adminUsername;
 	
+	public void setAdminUsername(String adminUsername) {
+		this.adminUsername = adminUsername;
+	}
+
 	public Form(){
 		
 	}

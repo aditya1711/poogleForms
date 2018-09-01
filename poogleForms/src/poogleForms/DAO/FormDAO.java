@@ -237,7 +237,7 @@ public class FormDAO extends DAO {
 				options = "";
 			}
 			ps.setString(i++, options);
-			ps.executeQuery();
+			ps.executeUpdate();
 			
 			
 		} catch (SQLException e) {
@@ -259,6 +259,31 @@ public class FormDAO extends DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Long addFormPrototypeToDB(Form f){
+		try(Connection conn = getConnection()){
+			PreparedStatement ps =conn.prepareStatement(queryForInsertingFormSpecificDetatils,Statement.RETURN_GENERATED_KEYS);
+			
+			int i=1;
+			ps.setString(i++, f.getName());
+			ps.setString(i++, f.getAdminUsername());
+			
+			
+			ResultSet rs  = ps.executeQuery();
+			
+			Long formID = (long) 0;
+			while(rs.next()){
+				formID = rs.getLong("formID");
+				System.out.println("Form ID entered: " + formID);
+			}
+			return formID;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public Long addFormToDB(Form f){

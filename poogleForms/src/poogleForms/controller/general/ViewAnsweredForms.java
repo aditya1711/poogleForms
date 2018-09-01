@@ -104,7 +104,7 @@ public class ViewAnsweredForms extends HttpServlet {
 		}
 		
 		request.setAttribute("forms", forms);
-		request.getRequestDispatcher("displayAllForms.jsp").forward(request, response);
+		request.getRequestDispatcher("displayForms.jsp").forward(request, response);
 	}
 
 }

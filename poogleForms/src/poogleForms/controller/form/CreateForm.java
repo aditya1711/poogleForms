@@ -63,6 +63,21 @@ public class CreateForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		
+		Form form = (Form) request.getAttribute("form");
+		Long formID = (long) 0;
+		if(form==null){
+			form = new Form();
+			form.setAdminUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+			formID =formDAO.addFormPrototypeToDB(form);
+			form.setID(formID);
+			System.out.println("Form not found in request in create form, Creating a new one");
+		}else{
+			formID = form.getID();
+		}
+		
+		request.setAttribute("form", form);
 		request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
 		
 		
