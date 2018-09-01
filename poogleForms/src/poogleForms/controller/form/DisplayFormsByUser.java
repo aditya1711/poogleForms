@@ -100,6 +100,7 @@ public class DisplayFormsByUser extends HttpServlet {
 		}
 		
 		request.setAttribute("forms", forms);
+		request.setAttribute("callingPage", "DisplayFormsByUser");
 		request.getRequestDispatcher("displayForms.jsp").forward(request, response);
 		
 	}

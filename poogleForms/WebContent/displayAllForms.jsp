@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
 
 <script>
 	function goToPage(inputDOM){
@@ -29,28 +32,42 @@
 	
 </script>
 
-<div id ="displayForms">
-page: ${displayIndex } of ${noOfPages }
- <table style="width:100%">
- 	<tr>
- 		<th>Sl.No</th>
- 		<th>FORM NAME</th>
- 		<th>BY</th>
- 	</tr>
-	
-	<c:forEach var="currForm" items = "${forms}" varStatus = "formsListIndex">
-		<tr>	
-			<td>${formsListIndex.count }</td>
-			<td><a onclick = 'displayForm(${currForm.ID})'>${currForm.name }</a></td>
-			<%-- <td id ="formID">${currForm.name }</td> --%>
-			<td>${currForm.adminUsername } </td>
+<div id="displayForms">
+	page: ${displayIndex } of ${noOfPages }
+	<table style="width: 100%">
+		<tr>
+			<th>Sl.No</th>
+			<th>FORM NAME</th>
+			<th>BY</th>
+			<th>Options</th>
 		</tr>
-	</c:forEach>
- </table>
+
+		<c:forEach var="currForm" items="${forms}" varStatus="formsListIndex">
+			<tr>
+				<td>${formsListIndex.count }</td>
+				<td><a onclick='displayForm(${currForm.ID})'>${currForm.name }</a></td>
+				<td>${currForm.adminUsername }</td>
+				<td id="optionTuppleOfFormID:${currForm.ID}"><script>
+	
+				    
+					var formAdmin = "${currForm.adminUsername}";
+					if(formAdmin == '${client.loginCredentials.username}'){
+						$("#optionTuppleOfFormID:${currForm.ID}").append("<button onclick ='editForm('${currForm.ID}')''>EDIT FORM</button>");
+					}
+					
+				</script></td>
+				<%-- <c:if test ="${currForm.adminUsername == '${client.loginCredentials.username}' }">
+				<td class = "optionsButtonClass">
+					<button onclick ="editForm('${currForm.ID}')">EDIT FORM</button>
+				</td>
+			</c:if> --%>
+			</tr>
+		</c:forEach>
+	</table>
 </div>
 
-<div id ="goToPageDiv">
-	<script >
+<div id="goToPageDiv">
+	<script>
 			$(document).ready(function(){
 				var input = $("<input id='displayIndex' type = 'text'>");
 				$("#goToPageDiv").append("Go To Page:");

@@ -21,7 +21,7 @@
 	function goToAdminPage(){
 		window.location.assign("level2page.jsp");
 	}
-	function goToDashboard(){
-		window.location.assign("dashboard.jsp");
+	function goToDashBoard(){
+		window.location.assign("Dashboard");
 	}
 </script>

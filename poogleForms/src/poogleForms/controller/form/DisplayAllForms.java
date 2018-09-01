@@ -18,7 +18,7 @@ import poogleForms.model.form.Form;
 /**
  * Servlet implementation class DisplayAllForms
  */
-@WebServlet("/DisplayAllForms")
+@WebServlet("/DisplayAllForms.NOACCESS")
 public class DisplayAllForms extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

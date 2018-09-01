@@ -21,7 +21,7 @@
 		<c:import url="allPageFunctionalities.jsp"></c:import>
 	</div>
 	<div id="displayForms">
-		<c:import url="formHandler.jsp"></c:import>
+		<c:import url="FormHandler.jsp"></c:import>
 	</div>
 	
 </body>

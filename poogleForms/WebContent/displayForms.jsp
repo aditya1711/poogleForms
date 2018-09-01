@@ -19,6 +19,7 @@
 	<c:import url="allPageFunctionalities.jsp"></c:import>
 </div>
 <div>
+
 <c:import url="displayAllForms.jsp"></c:import>
 </div>
 </body>
