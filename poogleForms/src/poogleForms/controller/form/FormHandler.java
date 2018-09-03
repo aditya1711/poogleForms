@@ -63,6 +63,9 @@ public class FormHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		if(request.getParameter("formID")==null){
+			request.getRequestDispatcher("wrongAccess.jsp").forward(request, response);
+		}
 		HttpSession session = request.getSession();
 		
 		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
@@ -73,7 +76,7 @@ public class FormHandler extends HttpServlet {
 		
 		System.out.println(answers);
 		
-		request.getRequestDispatcher("viewForms.jsp").include(request, response);
+		request.getRequestDispatcher("viewForms.jsp").forward(request, response);
 		
 		
 		
@@ -106,6 +109,7 @@ public class FormHandler extends HttpServlet {
 			}
 			
 		}
+		response.sendRedirect("Dashboard");
 	}
 
 }

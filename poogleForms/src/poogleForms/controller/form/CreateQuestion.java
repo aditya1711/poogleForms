@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import poogleForms.DAO.FormDAO;
+import poogleForms.model.clients.Client;
 import poogleForms.model.form.Form;
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
@@ -66,34 +68,56 @@ public class CreateQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String questionPrompt = request.getParameter("questionPrompt");
-		String optionsString = request.getParameter("options");
-		Long formID = Long.parseLong(request.getParameter("formID"));
-		String[] options = optionsString.split(";");
-		Question q = null;
-		
-		if(request.getParameter("questionType").equals("MCQ")){
-			q= new MultipleChoiceTypeQuestion();
-			q.setPrompt(questionPrompt);
-			q.setFormID(formID);
-			((MultipleChoiceTypeQuestion)(q)).setOptions(new ArrayList<String>(Arrays.asList(options)));
+		HttpSession session = request.getSession();
+		if(request.getParameter("command").equals("createQuestion")){
+			String questionPrompt = request.getParameter("questionPrompt");
+			String optionsString = request.getParameter("options");
+			Long formID = Long.parseLong(request.getParameter("formID"));
+			String[] options = optionsString.split(";");
+			Question q = null;
+			
+			if(request.getParameter("questionType").equals("MCQ")){
+				q= new MultipleChoiceTypeQuestion();
+				q.setPrompt(questionPrompt);
+				q.setFormID(formID);
+				((MultipleChoiceTypeQuestion)(q)).setOptions(new ArrayList<String>(Arrays.asList(options)));
+			}
+			else if(request.getParameter("questionType").equals("TextTypeQuestion")){
+				q= new TextTypeQuestion();
+				q.setPrompt(questionPrompt);
+				q.setFormID(formID);
+			}
+			
+			formDAO.addQuestionToDB(q);
+			
+			request.setAttribute("currQuestion", q);
+			
+			System.out.println(request.getParameter("questionPrompt"));
+			System.out.println(request.getParameter("questionType"));
+			System.out.println(request.getParameter("options"));
+			System.out.println(request.getParameter("formID"));
+			
+			request.getRequestDispatcher(q.getHandler()).forward(request, response);
 		}
-		else if(request.getParameter("questionType").equals("TextTypeQuestion")){
-			q= new TextTypeQuestion();
-			q.setPrompt(questionPrompt);
-			q.setFormID(formID);
+		else if(request.getParameter("command").equals("deleteQuestion")){
+			Question quesToDelete = formDAO.getQuestion(Long.parseLong(request.getParameter("questionID")));
+			if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), quesToDelete.getFormID())){
+				formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
+				System.out.println("delete Question Success");
+				response.getWriter().println("delete Question Success");
+				response.getWriter().flush();
+				response.flushBuffer();
+			}
+			else{
+				System.out.println("unauthorized delete question");
+				response.getWriter().println("unauthorized delete question");
+				response.getWriter().flush();
+				response.flushBuffer();
+			}
+			
 		}
 		
-		formDAO.addQuestionToDB(q);
 		
-		request.setAttribute("currQuestion", q);
-		
-		System.out.println(request.getParameter("questionPrompt"));
-		System.out.println(request.getParameter("questionType"));
-		System.out.println(request.getParameter("options"));
-		System.out.println(request.getParameter("formID"));
-		
-		request.getRequestDispatcher(q.getHandler()).forward(request, response);
 		
 	}
 

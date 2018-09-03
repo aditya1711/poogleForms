@@ -28,10 +28,13 @@
 	function displayForm(currFormID){
 		window.location.assign("FormHandler?formID=" + currFormID);
 	}
+	function editForm(currFormID){
+		window.location.assign("CreateForm?formID=" + currFormID);
+	}
 
 	
 </script>
-
+<c:set var = "clientUsername" value = "${client.loginCredentials.username}" ></c:set>
 <div id="displayForms">
 	page: ${displayIndex } of ${noOfPages }
 	<table style="width: 100%">
@@ -47,20 +50,12 @@
 				<td>${formsListIndex.count }</td>
 				<td><a onclick='displayForm(${currForm.ID})'>${currForm.name }</a></td>
 				<td>${currForm.adminUsername }</td>
-				<td id="optionTuppleOfFormID:${currForm.ID}"><script>
-	
-				    
-					var formAdmin = "${currForm.adminUsername}";
-					if(formAdmin == '${client.loginCredentials.username}'){
-						$("#optionTuppleOfFormID:${currForm.ID}").append("<button onclick ='editForm('${currForm.ID}')''>EDIT FORM</button>");
-					}
-					
-				</script></td>
-				<%-- <c:if test ="${currForm.adminUsername == '${client.loginCredentials.username}' }">
+				<c:if test ="${currForm.adminUsername == clientUsername }">
 				<td class = "optionsButtonClass">
 					<button onclick ="editForm('${currForm.ID}')">EDIT FORM</button>
 				</td>
-			</c:if> --%>
+				</c:if>
+				
 			</tr>
 		</c:forEach>
 	</table>
@@ -81,7 +76,3 @@
 			});
 	</script>
 </div>
-
-
-
-

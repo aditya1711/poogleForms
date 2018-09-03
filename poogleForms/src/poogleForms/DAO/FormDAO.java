@@ -17,7 +17,8 @@ import poogleForms.model.form.TextTypeQuestion;
 
 public class FormDAO extends DAO {
 	static FormDAO formDAO = new FormDAO();
-
+	
+	private static final String queryForCheckForLevel2UsernameAndFormIDPair ="select case when (select username from  forms where ID = ?) = ? then 1 else 0 end; ";
 	private static final String queryForGetingQuestionWithID = "select prompt, type as questionType,formID, ID as questionID, options from questions where id = ?;";
 	private static final String queryForGetingFormSpecificDetailsWithID = "select name as formName,username,ID as formID from forms where id = ?;";
 	private static final String queryForGetingQuestionsWithFormID = "select prompt, type as questionType, formID, ID as questionID, options from questions where formID = ?";
@@ -55,9 +56,9 @@ public class FormDAO extends DAO {
 
 	private static final String queryForDeletingQuestion = "delete from questions where ID = ? ";
 	
-	private static final String queryForDeletingForm = "alter table questions" +
+	private static final String queryForDeletingForm = "alter table questions " +
 			"nocheck constraint [FK__questions__formI__6754599E]; " +
-			"delete from forms where ID =1001041; " +
+			"delete from forms where ID =?; " +
 			"alter table questions " +
 			"check constraint [FK__questions__formI__6754599E];";
 
@@ -69,6 +70,26 @@ public class FormDAO extends DAO {
 	public static FormDAO getFormDAO(String dbURL, String userID, String password) throws SQLException{
 		formDAO.setDAO(dbURL, userID, password);
 		return formDAO;
+	}
+
+	public boolean checkForLevel2UsernameAndFormIDPair(String username, Long formID){
+		try(Connection conn = pc.getConnection();) {
+			PreparedStatement ps = conn.prepareStatement(queryForCheckForLevel2UsernameAndFormIDPair);
+			int i=1;
+			ps.setLong(i++, formID);
+			ps.setString(i++, username);
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			if(rs.getInt(1) == 1)
+				return true;
+			else
+				return false;
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public HashSet<Long> getFormIDsWithUsername(String username){

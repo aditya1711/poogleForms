@@ -162,18 +162,20 @@ public class AnswersDAO extends DAO{
 		if(checkToUpdate(ans)){
 			updateAnswer(ans);
 		}
-		try(Connection conn = getConnection()){
-			PreparedStatement ps = conn.prepareStatement(queryForInsertingAnswer);
-			int i=1;
-			ps.setString(i++, ans.toJSONString());
-			
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		else{
+			try(Connection conn = getConnection()){
+				PreparedStatement ps = conn.prepareStatement(queryForInsertingAnswer);
+				int i=1;
+				ps.setString(i++, ans.toJSONString());
+				
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	private void updateAnswer(Answer ans) {
