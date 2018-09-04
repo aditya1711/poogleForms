@@ -38,7 +38,7 @@ public class Dasboard extends HttpServlet {
 				System.out.println("DB initialzters errors");
 				e.printStackTrace();
 			}*/
-	    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+	    	/*String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 			String DB_User = "sa";
 			String DB_Password = "Welcome@1234";
 			try {
@@ -46,7 +46,9 @@ public class Dasboard extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
+		 
+		 formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
 	    }
 	
     public Dasboard() {

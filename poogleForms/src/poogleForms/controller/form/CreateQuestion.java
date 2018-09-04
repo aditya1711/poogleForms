@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
 import poogleForms.model.clients.Client;
 import poogleForms.model.form.Form;
@@ -44,7 +45,7 @@ public class CreateQuestion extends HttpServlet {
 			System.out.println("DB initialzters errors");
 			e.printStackTrace();
 		}*/
-    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+    	/*String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 		String DB_User = "sa";
 		String DB_Password = "Welcome@1234";
 		try {
@@ -53,7 +54,9 @@ public class CreateQuestion extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+    	formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
+   	 
     }
 
 	/**
@@ -88,9 +91,11 @@ public class CreateQuestion extends HttpServlet {
 				q.setFormID(formID);
 			}
 			
-			formDAO.addQuestionToDB(q);
+			Long questionID = formDAO.addQuestionToDB(q);
 			
-			request.setAttribute("currQuestion", q);
+			request.setAttribute("currQuestion", formDAO.getQuestion(questionID));
+			request.setAttribute("callingPage", "CreateQuestionServlet");
+			request.setAttribute("formAdminUsername", formDAO.getForm(formID).getAdminUsername());
 			
 			System.out.println(request.getParameter("questionPrompt"));
 			System.out.println(request.getParameter("questionType"));

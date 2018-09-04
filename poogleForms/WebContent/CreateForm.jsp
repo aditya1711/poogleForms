@@ -9,8 +9,7 @@
 	rel="stylesheet">
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>	
+
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
@@ -103,19 +102,6 @@
 		
 	}
 	
- 	function deleteQuestion(questionID, questionDivID){
- 		//console.log($("#questionDiv1001017").html());
-		console.log($("#" + questionDivID).text());
-		console.log("#" + questionDivID);
-		//$("#" + questionDivID).hide();
-		$("#" + questionDivID).load("CreateQuestion", {
-			command:"deleteQuestion",
-			questionID:questionID
-		},function(){
-			$("#" + questionDivID).hide(2000);
-		});
-		
-	}
 	function deleteForm(){
 		$.post("CreateForm", {
 			command:"deleteForm",
@@ -141,20 +127,17 @@
 
 	<div id="alreadyCreatedForm">
 		<button onclick="deleteForm()">DELETE THIS FORM</button>
-		
+
 		<input id="formNameInputId" type="text" name="formName"
 			value="${form.name }">Enter form Name<BR>
 
 		<c:forEach var="ques" items="${form.list}"
 			varStatus="questionLoopCount">
 			<c:set var="currQuestion" scope="request" value="${ques}" />
-			
-			<div id="questionDiv${currQuestion.ID }" >
-				<c:import url="${currQuestion.handler}"></c:import>
-				<button onclick="deleteQuestion('${currQuestion.ID}' , 'questionDiv${currQuestion.ID }')">DELETE THIS QUESTION</button>
-			</div>
-			
-			<BR><BR>
+			<c:set var="callingPage" scope="request" value="CreateForm_jsp" />
+			<c:import url="${currQuestion.handler}"></c:import>
+			<BR>
+			<BR>
 		</c:forEach>
 	</div>
 
@@ -187,7 +170,7 @@
 	<BR>
 	<BR>
 	<BR>
-	<button  id ="submitFormButton" type="submit"> SumitForm</button>
+	<button id="submitFormButton" type="submit">SumitForm</button>
 </body>
 
 <script>

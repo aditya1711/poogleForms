@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
 import poogleForms.model.clients.Client;
 import poogleForms.model.clients.ClientTypes;
@@ -42,7 +43,7 @@ public class DisplayFormsByUser extends HttpServlet {
 	 */
     
     public void init(){
-    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+    	/*String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 		String DB_User = "sa";
 		String DB_Password = "Welcome@1234";
 		try {
@@ -50,7 +51,8 @@ public class DisplayFormsByUser extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

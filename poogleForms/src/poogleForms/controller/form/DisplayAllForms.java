@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
 import poogleForms.model.form.Form;
 
@@ -45,7 +46,7 @@ public class DisplayAllForms extends HttpServlet {
 			System.out.println("DB initialzters errors");
 			e.printStackTrace();
 		}*/
-    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+    	/*String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 		String DB_User = "sa";
 		String DB_Password = "Welcome@1234";
 		try {
@@ -53,7 +54,9 @@ public class DisplayAllForms extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+    	formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
+   	 
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

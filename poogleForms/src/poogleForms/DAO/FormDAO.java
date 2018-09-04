@@ -30,8 +30,11 @@ public class FormDAO extends DAO {
 			"begin transaction " + 
 			"insert into IDTable " + 
 			"values ('1'); " +
+			"declare @questionID int " + 
+			"set @questionID = scope_identity() "+
 			"insert into questions (prompt, type, formID, options, ID) " + 
-			"values (?,(select questionType from questionTypes where questionType = ?),(select ID from forms where ID = ?),?, SCOPE_IDENTITY()); " +
+			"values (?,(select questionType from questionTypes where questionType = ?),(select ID from forms where ID = ?),?, @questionID); " +
+			"select @questionID as questionID " +
 			"commit; " +
 			"end try " +
 			"begin catch " +
@@ -241,7 +244,7 @@ public class FormDAO extends DAO {
 		}
 	}
 
-	public void addQuestionToDB(Question q){
+	public Long addQuestionToDB(Question q){
 		try(Connection conn = getConnection()){
 			PreparedStatement ps = conn.prepareStatement(queryForInsertingQuestion);
 
@@ -263,14 +266,16 @@ public class FormDAO extends DAO {
 				options = "";
 			}
 			ps.setString(i++, options);
-			ps.executeUpdate();
-
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			return rs.getLong("questionID");
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return null;
 	}
 
 

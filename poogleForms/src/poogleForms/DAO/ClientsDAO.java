@@ -25,6 +25,11 @@ public class ClientsDAO extends DAO {
 																				"select 1; " +
 																					"else " +
 																						"select 0; ";
+	private static final String queryToCheckIfUsernameExists = "use poogleForms " +
+			"if exists(select username from loginCredentials where username= ?) " +
+				"select 1; " +
+					"else " +
+						"select 0; ";
 	
 	
 	private static final String queryToInsertClientSpecificDetails = "begin try " + 
@@ -171,5 +176,24 @@ public class ClientsDAO extends DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public boolean checkIfUsernameExists(String username) {
+		// TODO Auto-generated method stub
+		try(Connection conn = pc.getConnection();) {
+			PreparedStatement ps = conn.prepareStatement(queryToCheckIfUsernameExists);
+			int i=1;
+			ps.setString(i++, username);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			if(rs.getInt(1) == 1)
+				return true;
+			else
+				return false;
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

@@ -43,7 +43,7 @@ public class ViewAnsweredForms extends HttpServlet {
 			System.out.println("DB initialzters errors");
 			e.printStackTrace();
 		}*/
-    	String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
+    	/*String DB_URL = "jdbc:sqlserver://ggku3ser2;instanceName=SQL2016;databaseName=poogleForms";
 		String DB_User = "sa";
 		String DB_Password = "Welcome@1234";
 		try {
@@ -52,7 +52,9 @@ public class ViewAnsweredForms extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+    	 formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
+    	 answersDAO = (AnswersDAO) getServletContext().getAttribute("answersDAO");
     }
     
 
