@@ -46,22 +46,28 @@ public class UserSignUp extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userType = request.getParameter("userType");
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		Level1Clients l1c = new Level1Clients();
-		l1c.setClientType(ClientTypes.LEVEL1);
-		l1c.setFirstName(firstName);
-		l1c.setLastName(lastName);
-		l1c.setLoginCredentials(new LoginCredentials(username, password, ClientTypes.LEVEL1));
-		if(userType.equals("LEVEL2")){
-			l1c.setLoginCredentials(new LoginCredentials(username, password, ClientTypes.LEVEL2));
+		try {
+			String userType = request.getParameter("userType");
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			Level1Clients l1c = new Level1Clients();
+			l1c.setClientType(ClientTypes.LEVEL1);
+			l1c.setFirstName(firstName);
+			l1c.setLastName(lastName);
+			l1c.setLoginCredentials(new LoginCredentials(username, password, ClientTypes.LEVEL1));
+			if(userType.equals("LEVEL2")){
+				l1c.setLoginCredentials(new LoginCredentials(username, password, ClientTypes.LEVEL2));
+			}
+			clientsDAO.addClientToDB(l1c);
+			//request.getRequestDispatcher("Login").forward(request, response);
+			response.sendRedirect("Login");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
-		clientsDAO.addClientToDB(l1c);
-		//request.getRequestDispatcher("Login").forward(request, response);
-		response.sendRedirect("Login");
 	}
 
 }

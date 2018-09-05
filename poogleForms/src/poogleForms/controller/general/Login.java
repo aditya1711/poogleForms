@@ -40,7 +40,8 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		session.setAttribute("isClientValidationDone", false);
 		response.sendRedirect("login.jsp");
 	}
 
@@ -49,14 +50,25 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		Client newClient = new Level1Clients();
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		newClient = clientsDAO.getClientByUsername(username, password);
-		session.setAttribute("client", newClient);
-		request.getRequestDispatcher("Dashboard").forward(request, response);
+		try {
+			HttpSession session = request.getSession(false);
+			if(session!=null){
+				session.invalidate();
+			}
+			session= request.getSession();
+			Client newClient = new Level1Clients();
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			newClient = clientsDAO.getClientByUsername(username, password);
+			session.setAttribute("client", newClient);
+			session.setAttribute("isClientValidationDone", true);
+			response.sendRedirect("Dashboard");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
+		}
 		
 	}
 

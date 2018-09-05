@@ -71,55 +71,61 @@ public class CreateQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		if(request.getParameter("command").equals("createQuestion")){
-			String questionPrompt = request.getParameter("questionPrompt");
-			String optionsString = request.getParameter("options");
-			Long formID = Long.parseLong(request.getParameter("formID"));
-			String[] options = optionsString.split(";");
-			Question q = null;
-			
-			if(request.getParameter("questionType").equals("MCQ")){
-				q= new MultipleChoiceTypeQuestion();
-				q.setPrompt(questionPrompt);
-				q.setFormID(formID);
-				((MultipleChoiceTypeQuestion)(q)).setOptions(new ArrayList<String>(Arrays.asList(options)));
+		try {
+			HttpSession session = request.getSession();
+			if(request.getParameter("command").equals("createQuestion")){
+				String questionPrompt = request.getParameter("questionPrompt");
+				String optionsString = request.getParameter("options");
+				Long formID = Long.parseLong(request.getParameter("formID"));
+				String[] options = optionsString.split(";");
+				Question q = null;
+				
+				if(request.getParameter("questionType").equals("MCQ")){
+					q= new MultipleChoiceTypeQuestion();
+					q.setPrompt(questionPrompt);
+					q.setFormID(formID);
+					((MultipleChoiceTypeQuestion)(q)).setOptions(new ArrayList<String>(Arrays.asList(options)));
+				}
+				else if(request.getParameter("questionType").equals("TextTypeQuestion")){
+					q= new TextTypeQuestion();
+					q.setPrompt(questionPrompt);
+					q.setFormID(formID);
+				}
+				
+				Long questionID = formDAO.addQuestionToDB(q);
+				
+				request.setAttribute("currQuestion", formDAO.getQuestion(questionID));
+				request.setAttribute("callingPage", "CreateQuestionServlet");
+				request.setAttribute("formAdminUsername", formDAO.getForm(formID).getAdminUsername());
+				
+				System.out.println(request.getParameter("questionPrompt"));
+				System.out.println(request.getParameter("questionType"));
+				System.out.println(request.getParameter("options"));
+				System.out.println(request.getParameter("formID"));
+				
+				request.getRequestDispatcher(q.getHandler()).forward(request, response);
 			}
-			else if(request.getParameter("questionType").equals("TextTypeQuestion")){
-				q= new TextTypeQuestion();
-				q.setPrompt(questionPrompt);
-				q.setFormID(formID);
+			else if(request.getParameter("command").equals("deleteQuestion")){
+				Question quesToDelete = formDAO.getQuestion(Long.parseLong(request.getParameter("questionID")));
+				if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), quesToDelete.getFormID())){
+					formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
+					System.out.println("delete Question Success");
+					response.getWriter().println("delete Question Success");
+					response.getWriter().flush();
+					response.flushBuffer();
+				}
+				else{
+					System.out.println("unauthorized delete question");
+					response.getWriter().println("unauthorized delete question");
+					response.getWriter().flush();
+					response.flushBuffer();
+				}
+				
 			}
-			
-			Long questionID = formDAO.addQuestionToDB(q);
-			
-			request.setAttribute("currQuestion", formDAO.getQuestion(questionID));
-			request.setAttribute("callingPage", "CreateQuestionServlet");
-			request.setAttribute("formAdminUsername", formDAO.getForm(formID).getAdminUsername());
-			
-			System.out.println(request.getParameter("questionPrompt"));
-			System.out.println(request.getParameter("questionType"));
-			System.out.println(request.getParameter("options"));
-			System.out.println(request.getParameter("formID"));
-			
-			request.getRequestDispatcher(q.getHandler()).forward(request, response);
-		}
-		else if(request.getParameter("command").equals("deleteQuestion")){
-			Question quesToDelete = formDAO.getQuestion(Long.parseLong(request.getParameter("questionID")));
-			if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), quesToDelete.getFormID())){
-				formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
-				System.out.println("delete Question Success");
-				response.getWriter().println("delete Question Success");
-				response.getWriter().flush();
-				response.flushBuffer();
-			}
-			else{
-				System.out.println("unauthorized delete question");
-				response.getWriter().println("unauthorized delete question");
-				response.getWriter().flush();
-				response.flushBuffer();
-			}
-			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
 		
 		

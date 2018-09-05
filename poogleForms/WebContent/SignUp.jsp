@@ -19,10 +19,10 @@
 		UserType: <select name="userType">
 			<option value="LEVEL1">Level1</option>
 			<option value="LEVEL2">Level2</option>
-		</select> <BR>
-		FirstName: <input type="text" id="firstnameInputID" name="firstname"><BR>
-		Lastname: <input type="text" id="lastnameInputID" name="lastname"><BR>
-		USERNAME: <input type="text" id="usernameInputID" name="username"><BR>
+		</select> <BR> FirstName: <input type="text" id="firstnameInputID"
+			name="firstname"><BR> Lastname: <input type="text"
+			id="lastnameInputID" name="lastname"><BR> USERNAME: <input
+			type="text" id="usernameInputID" name="username"><BR>
 		Password: <input type="password" id="passwordInputID" name="password"><BR>
 		<input type="submit" id="btn" value="signUp"><BR>
 	</form>
@@ -34,7 +34,6 @@
 			var lastname = document.forms["myform"]["lastname"].value;
 			var username = document.forms["myform"]["username"].value;
 			var password = document.forms["myform"]["password"].value;
-			var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 			if ((firstname == null || firstname == "")
 					&& (lastname == null || lastname == "")
@@ -42,30 +41,59 @@
 					&& (password == null || password == "")) {
 				alert('All fields are mandatory');
 				return false;
-			} else if(checkForExistingUsername(username)){
+			} else if (checkForExistingUsername(username)) {
 				alert("Username Already Exists");
 				return false;
-			}else{
+			} else {
 				alert("Login To continue");
 				return true;
 			}
 		}
-		function checkForExistingUsername(username){
-			var check;
-			var result = $.post("UsernameCheck",{username: username},function(){
-				console.log(result);
-				if (result=='false'){
-					check= false;
+		function checkForExistingUsername(username) {
+			var check=true;
+			$.ajax({
+				async : false,
+				type : 'POST',
+				dataType : "text",
+				url : "UsernameCheck",
+				data : {
+					command : "checkForExistingUsername",
+					username : username
+				},
+				success : function(postDataResult) {
+					if (postDataResult == "false") {
+						check = false;
+						//alert("ugabuga2");
+					} else if (postDataResult == "true") {
+						check = true;
+						//alert("ugabuga1");
+					} else {
+						check = true;
+						//alert("ugabuga");
+					}
+					console.log(check);
 				}
-				else if(result=="true"){
+			});
+			console.log(check);
+			return check;
+
+			/* $.post("UsernameCheck",{command:"checkForExistingUsername" ,username: username},function(data){
+				if (data=="false"){
+					check= false;
+					alert("ugabuga2");
+				}
+				else if(data=="true"){
 					check= true;
+					alert("ugabuga1");
 				}
 				else{
 					check=true;
+					alert("ugabuga");
 				}
-			});
-			
-			return check;
+				console.log(check);
+				return check;
+			}); */
+
 		}
 	</script>
 </body>

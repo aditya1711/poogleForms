@@ -65,20 +65,26 @@ public class FormHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		if(request.getParameter("formID")==null){
-			request.getRequestDispatcher("wrongAccess.jsp").forward(request, response);
+		try {
+			if(request.getParameter("formID")==null){
+				request.getRequestDispatcher("wrongAccess.jsp").forward(request, response);
+			}
+			HttpSession session = request.getSession();
+			
+			Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+			Map<Long,Answer> answers = answersDAO.getAnswersWithUsernameAndFormID(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), f.getID());
+			
+			request.setAttribute("form", f);
+			request.setAttribute("answersMap", answers);
+			
+			System.out.println(answers);
+			
+			request.getRequestDispatcher("viewForms.jsp").forward(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
-		HttpSession session = request.getSession();
-		
-		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
-		Map<Long,Answer> answers = answersDAO.getAnswersWithUsernameAndFormID(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), f.getID());
-		
-		request.setAttribute("form", f);
-		request.setAttribute("answersMap", answers);
-		
-		System.out.println(answers);
-		
-		request.getRequestDispatcher("viewForms.jsp").forward(request, response);
 		
 		
 		
@@ -89,29 +95,35 @@ public class FormHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = (HttpSession)request.getSession();
-		
-		Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
-		ArrayList<Question> qs = f.getList();
-		
-		for(int i=0;i<qs.size();i++){
-			System.out.println("question ID: " + qs.get(i).getID());
-			String answer = request.getParameter(Long.toString(qs.get(i).getID()));
-			System.out.println("answer string: " + answer);
-			if(!(answer==null || answer=="")){
-				System.out.println("from forms handler------> "+ answer);
-				ArrayList<String> answers = new ArrayList<String>();
-				answers.add(answer);
-				Answer ans = new Answer();
-				ans.setAnswers(answers);
-				ans.setUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
-				ans.setQuestionID(qs.get(i).getID());
-				
-				answersDAO.addAnswerInDB(ans);
-			}
+		try {
+			HttpSession session = (HttpSession)request.getSession();
 			
+			Form f = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+			ArrayList<Question> qs = f.getList();
+			
+			for(int i=0;i<qs.size();i++){
+				System.out.println("question ID: " + qs.get(i).getID());
+				String answer = request.getParameter(Long.toString(qs.get(i).getID()));
+				System.out.println("answer string: " + answer);
+				if(!(answer==null || answer=="")){
+					System.out.println("from forms handler------> "+ answer);
+					ArrayList<String> answers = new ArrayList<String>();
+					answers.add(answer);
+					Answer ans = new Answer();
+					ans.setAnswers(answers);
+					ans.setUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+					ans.setQuestionID(qs.get(i).getID());
+					
+					answersDAO.addAnswerInDB(ans);
+				}
+				
+			}
+			response.sendRedirect("Dashboard");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
-		response.sendRedirect("Dashboard");
 	}
 
 }

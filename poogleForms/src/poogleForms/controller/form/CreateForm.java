@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
 import poogleForms.model.clients.Client;
+import poogleForms.model.clients.ClientTypes;
 import poogleForms.model.form.*;
 
 /**
@@ -56,7 +57,7 @@ public class CreateForm extends HttpServlet {
 			e.printStackTrace();
 		}*/
 		formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
-   	 
+
 	}
 
 	/**
@@ -65,28 +66,51 @@ public class CreateForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession();
-		Form form;
-		if(request.getParameter("formID")!=null && 
-				formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
 
-			form = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
-		}else{
-			form = (Form) request.getAttribute("form");
-		}
-		Long formID = (long) 0;
-		if(form==null){
-			form = new Form();
-			form.setAdminUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
-			formID =formDAO.addFormPrototypeToDB(form);
-			form.setID(formID);
-			System.out.println("Form not found in request in create form, Creating a new one");
-		}else{
-			formID = form.getID();
-		}
+		try {
+			HttpSession session = request.getSession();
 
-		request.setAttribute("form", form);
-		request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
+			try {
+				if(((Client)(session.getAttribute("client"))).getLoginCredentials().getType() == ClientTypes.LEVEL1 ||
+						!formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID"))) ){
+					request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+					return;
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+				return;
+			}catch (NullPointerException e){
+				e.printStackTrace();
+				request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+				return;
+			}
+
+			Form form;
+			if(request.getParameter("formID")!=null){
+				form = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+			}else{
+				form = (Form) request.getAttribute("form");
+			}
+			Long formID = (long) 0;
+			if(form==null){
+				form = new Form();
+				form.setAdminUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+				formID =formDAO.addFormPrototypeToDB(form);
+				form.setID(formID);
+				System.out.println("Form not found in request in create form, Creating a new one");
+			}else{
+				formID = form.getID();
+			}
+
+			request.setAttribute("form", form);
+			request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
+		}
 
 
 	}
@@ -126,28 +150,34 @@ public class CreateForm extends HttpServlet {
 		Form f= new Form(request.getParameter("formName"), qList, ((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
 
 		formDAO.addFormToDB(f);*/
-		HttpSession session = request.getSession();
-		if(request.getParameter("command").equals("createForm")){
-			formDAO.updateFormName(Long.parseLong(request.getParameter("formID")), request.getParameter("formName"));
-			//response.sendRedirect("Dashboard");
-		}
-		else if(request.getParameter("command").equals("deleteForm")){
-			if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
-				formDAO.deleteForm(Long.parseLong(request.getParameter("formID")));
-				System.out.println("Sucess delete form");
-				response.getWriter().println("Delete Form Success");
-				response.getWriter().flush();
-				response.flushBuffer();
-				
+		try {
+			HttpSession session = request.getSession();
+			if(request.getParameter("command").equals("createForm")){
+				formDAO.updateFormName(Long.parseLong(request.getParameter("formID")), request.getParameter("formName"));
+				//response.sendRedirect("Dashboard");
 			}
-			else{
-				System.out.println("unauthorized delete form");
-				response.getWriter().println("unauthorized delete Form");
-				response.getWriter().flush();
-				response.flushBuffer();
+			else if(request.getParameter("command").equals("deleteForm")){
+				if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
+					formDAO.deleteForm(Long.parseLong(request.getParameter("formID")));
+					System.out.println("Sucess delete form");
+					response.getWriter().println("Delete Form Success");
+					response.getWriter().flush();
+					response.flushBuffer();
+
+				}
+				else{
+					System.out.println("unauthorized delete form");
+					response.getWriter().println("unauthorized delete Form");
+					response.getWriter().flush();
+					response.flushBuffer();
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
-		
+
 
 	}
 

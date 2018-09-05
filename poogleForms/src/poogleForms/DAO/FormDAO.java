@@ -84,10 +84,16 @@ public class FormDAO extends DAO {
 			
 			ResultSet rs = ps.executeQuery();
 			rs.next();
-			if(rs.getInt(1) == 1)
+			if(rs.getInt(1) == 1){
+				System.out.println("forID username pair okay");
 				return true;
-			else
+			}
+				
+			else{
+				System.out.println("forID username pair NOT okay");
 				return false;
+			}
+				
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

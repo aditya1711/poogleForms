@@ -73,41 +73,47 @@ public class ViewAnsweredForms extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = (HttpSession)request.getSession();
-		
-		String displayIndexString =request.getParameter("displayIndex");
-		if(displayIndexString==null){
-			Object o  = request.getAttribute("displayIndex");
-			if(o!=null){
-				displayIndexString = o.toString();
+		try {
+			HttpSession session = (HttpSession)request.getSession();
+			
+			String displayIndexString =request.getParameter("displayIndex");
+			if(displayIndexString==null){
+				Object o  = request.getAttribute("displayIndex");
+				if(o!=null){
+					displayIndexString = o.toString();
+				}
 			}
+			
+			if(displayIndexString==null){
+				displayIndexString= "1";
+			}
+			int displayIndex=0;
+			displayIndex = Integer.parseInt(displayIndexString);
+			
+			ArrayList<Long> formIDsList =new ArrayList<Long>(answersDAO.getAnsweredFormIDsWithUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername()));
+			Integer noOfPages = (int) (formIDsList.size())/10;
+			if((formIDsList.size())%10>0){
+				noOfPages++;
+			}
+			
+			request.setAttribute("noOfPages", noOfPages.toString());
+			request.setAttribute("displayIndex", displayIndexString);
+			request.setAttribute("callingPage", "ViewAnsweredForms");
+			
+			ArrayList<Form> forms = new ArrayList<Form>();
+			
+			for(int i =(displayIndex-1)*10 ;i<formIDsList.size() && i < (displayIndex)*10;i++){
+				forms.add(formDAO.getForm(formIDsList.get(i)));
+			}
+			
+			request.setAttribute("forms", forms);
+			request.setAttribute("callingPage", "ViewAnsweredForms");
+			request.getRequestDispatcher("displayForms.jsp").forward(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
-		
-		if(displayIndexString==null){
-			displayIndexString= "1";
-		}
-		int displayIndex=0;
-		displayIndex = Integer.parseInt(displayIndexString);
-		
-		ArrayList<Long> formIDsList =new ArrayList<Long>(answersDAO.getAnsweredFormIDsWithUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername()));
-		Integer noOfPages = (int) (formIDsList.size())/10;
-		if((formIDsList.size())%10>0){
-			noOfPages++;
-		}
-		
-		request.setAttribute("noOfPages", noOfPages.toString());
-		request.setAttribute("displayIndex", displayIndexString);
-		request.setAttribute("callingPage", "ViewAnsweredForms");
-		
-		ArrayList<Form> forms = new ArrayList<Form>();
-		
-		for(int i =(displayIndex-1)*10 ;i<formIDsList.size() && i < (displayIndex)*10;i++){
-			forms.add(formDAO.getForm(formIDsList.get(i)));
-		}
-		
-		request.setAttribute("forms", forms);
-		request.setAttribute("callingPage", "ViewAnsweredForms");
-		request.getRequestDispatcher("displayForms.jsp").forward(request, response);
 	}
 
 }

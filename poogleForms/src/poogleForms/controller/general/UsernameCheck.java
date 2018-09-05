@@ -31,7 +31,7 @@ public class UsernameCheck extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().write("usernameCheck called by get");
 	}
 
 	/**
@@ -39,14 +39,37 @@ public class UsernameCheck extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("username check servlet called");
-		if(clientsDAO.checkIfUsernameExists(request.getParameter("username"))){
-			System.out.println("username exists");
-			response.getWriter().write("true");
-		}
-		else{
-			System.out.println("username donot exists");
-			response.getWriter().write("false");
+		try {
+			System.out.println("username check servlet called");
+			if (request.getParameter("command").equals("checkForExistingUsername")) {
+				if (clientsDAO.checkIfUsernameExists(request.getParameter("username"))) {
+					System.out.println("username exists");
+					response.getWriter().write("true");
+					response.getWriter().flush();
+					response.flushBuffer();
+				} else {
+					System.out.println("username donot exists");
+					response.getWriter().write("false");
+					response.getWriter().flush();
+					response.flushBuffer();
+				} 
+			}else if(request.getParameter("command").equals("checkForUsernameAndPasswordPair")){
+				if (clientsDAO.checkForUsernamePasswordPair(request.getParameter("username"), request.getParameter("password"))) {
+					System.out.println("username password pair exists");
+					response.getWriter().write("true");
+					response.getWriter().flush();
+					response.flushBuffer();
+				} else {
+					System.out.println("username password pair donot exists");
+					response.getWriter().write("false");
+					response.getWriter().flush();
+					response.flushBuffer();
+				} 
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("DeveloperError.jsp");
 		}
 	}
 
