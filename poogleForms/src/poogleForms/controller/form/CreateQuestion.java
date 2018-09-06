@@ -93,7 +93,10 @@ public class CreateQuestion extends HttpServlet {
 				}
 				
 				Long questionID = formDAO.addQuestionToDB(q);
-				
+				if(questionID==0){
+					response.getWriter().write("Question Adding failed, Try again");
+					return;
+				}
 				request.setAttribute("currQuestion", formDAO.getQuestion(questionID));
 				request.setAttribute("callingPage", "CreateQuestionServlet");
 				request.setAttribute("formAdminUsername", formDAO.getForm(formID).getAdminUsername());
@@ -108,9 +111,15 @@ public class CreateQuestion extends HttpServlet {
 			else if(request.getParameter("command").equals("deleteQuestion")){
 				Question quesToDelete = formDAO.getQuestion(Long.parseLong(request.getParameter("questionID")));
 				if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), quesToDelete.getFormID())){
-					formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
-					System.out.println("delete Question Success");
-					response.getWriter().println("delete Question Success");
+					Long result = formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
+					if(result== 0){
+						response.getWriter().println("delete Question FAILED. TRY AGAIN");
+						return;
+					}
+					else{
+						System.out.println("delete Question Success");
+						response.getWriter().println("delete Question Success");
+					}
 					response.getWriter().flush();
 					response.flushBuffer();
 				}

@@ -154,7 +154,8 @@ public class CreateForm extends HttpServlet {
 			if(request.getParameter("command").equals("createForm")){
 				Long result = formDAO.updateFormName(Long.parseLong(request.getParameter("formID")), request.getParameter("formName"));
 				if(result == 0){
-					
+					response.getWriter().println("Updating Form Name FAILED, Try AGAIN");
+					return;
 				}
 				//response.sendRedirect("Dashboard");
 			}
@@ -163,6 +164,8 @@ public class CreateForm extends HttpServlet {
 					Long result = formDAO.deleteForm(Long.parseLong(request.getParameter("formID")));
 					if(result==0){
 						//response.setStatus(arg0);
+						response.getWriter().println("Delete Form FAILED, Try AGAIN");
+						return;
 					}
 					System.out.println("Sucess delete form");
 					response.getWriter().println("Delete Form Success");

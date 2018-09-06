@@ -371,7 +371,7 @@ public class FormDAO extends DAO {
 		}
 	}
 
-	public void deleteQuestion(Long questionID){
+	public Long deleteQuestion(Long questionID){
 		try(Connection conn = getConnection()){
 			PreparedStatement ps =conn.prepareStatement(queryForDeletingQuestion);
 
@@ -379,9 +379,11 @@ public class FormDAO extends DAO {
 			ps.setLong(i++, questionID);
 
 			ps.executeUpdate();
+			return (long) 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return (long) 0;
 		}
 	}
 
