@@ -96,7 +96,7 @@
 		}, function(data) {
 			$("#dialog").dialog('close');
 			$("#alreadyCreatedForm").append(data + "<br><br>");
-			$("#dialogAddQuestionButtons").show();
+			
 		});
 		console.log(newQuestionHTML);
 		
@@ -181,7 +181,10 @@
 
 		$("#dialog").dialog({
 			autoOpen : false,
-			modal : true
+			modal : true,
+			close: function(){
+				$("#dialogAddQuestionButtons").show();
+			}
 		});
 		$("#submitFormButton").click(function(e){
 			e.preventDefault();

@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h>UNAUTHORIZED ACCESS</h>
+<h1>UNAUTHORIZED ACCESS</h1>
+<a href="Dashboard">HOME?</a>
+<a href="Login">Login?</a>
 </body>
 </html>

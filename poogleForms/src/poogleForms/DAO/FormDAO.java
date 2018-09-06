@@ -354,7 +354,7 @@ public class FormDAO extends DAO {
 		return null;
 	}
 
-	public void updateFormName(Long formID, String formName){
+	public Long updateFormName(Long formID, String formName){
 		try(Connection conn = getConnection()){
 			PreparedStatement ps =conn.prepareStatement(queryForUpdatingFormName);
 
@@ -363,9 +363,11 @@ public class FormDAO extends DAO {
 			ps.setLong(i++, formID);
 
 			ps.executeUpdate();
+			return (long) 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return (long) 0;
 		}
 	}
 
@@ -383,7 +385,7 @@ public class FormDAO extends DAO {
 		}
 	}
 
-	public void deleteForm(Long formID){
+	public Long deleteForm(Long formID){
 		try(Connection conn = getConnection()){
 			PreparedStatement ps =conn.prepareStatement(queryForDeletingForm);
 
@@ -391,9 +393,11 @@ public class FormDAO extends DAO {
 			ps.setLong(i++, formID);
 
 			ps.executeUpdate();
+			return (long)1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return (long)0;
 		}
 	}
 

@@ -152,12 +152,18 @@ public class CreateForm extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			if(request.getParameter("command").equals("createForm")){
-				formDAO.updateFormName(Long.parseLong(request.getParameter("formID")), request.getParameter("formName"));
+				Long result = formDAO.updateFormName(Long.parseLong(request.getParameter("formID")), request.getParameter("formName"));
+				if(result == 0){
+					
+				}
 				//response.sendRedirect("Dashboard");
 			}
 			else if(request.getParameter("command").equals("deleteForm")){
 				if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
-					formDAO.deleteForm(Long.parseLong(request.getParameter("formID")));
+					Long result = formDAO.deleteForm(Long.parseLong(request.getParameter("formID")));
+					if(result==0){
+						//response.setStatus(arg0);
+					}
 					System.out.println("Sucess delete form");
 					response.getWriter().println("Delete Form Success");
 					response.getWriter().flush();

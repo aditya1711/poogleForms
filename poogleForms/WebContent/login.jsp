@@ -26,7 +26,15 @@
 		$("#submitButton").click(function(e) {
 			var username = $("#usernameInputID").val();
 			var password = $("#passwordInputID").val();
-			if (!checkForUsernameAndPasswordPair(username, password)) {
+			if(username==null || username==""){
+				e.preventDefault();
+				alert("Username mandotary");
+			}
+			else if(password==null || password==""){
+				e.preventDefault();
+				alert("password mandotary");
+			}
+			else if (!checkForUsernameAndPasswordPair(username, password)) {
 				e.preventDefault();
 				alert("Wrong username and password pair");
 			} else {
