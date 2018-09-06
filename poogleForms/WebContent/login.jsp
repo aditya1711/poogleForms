@@ -18,6 +18,7 @@
 			name="password"> <br> <input id="submitButton"
 			type="submit" value="Login">
 	</form>
+	<a href="UserSignUp">Sign Up?</a>
 </body>
 
 <script>
@@ -58,7 +59,7 @@
 					//alert("ugabuga1");
 				} else {
 					check = true;
-					//alert("ugabuga");
+					alert("ugabuga");
 				}
 				console.log(check);
 			}

@@ -35,6 +35,9 @@
 	
 </script>
 <c:set var = "clientUsername" value = "${client.loginCredentials.username}" ></c:set>
+
+<h1>Page: "${pageHeading }"</h1>
+
 <div id="displayForms">
 	page: ${displayIndex } of ${noOfPages }
 	<table style="width: 100%">
@@ -42,18 +45,26 @@
 			<th>Sl.No</th>
 			<th>FORM NAME</th>
 			<th>BY</th>
-			<th>Options</th>
+			<th id = "optionsColumn">Options</th>
+			<th id ="reportsColumn">Reports</th>
 		</tr>
 
 		<c:forEach var="currForm" items="${forms}" varStatus="formsListIndex">
 			<tr>
+				<%-- <c:set var= "formsListIndex" value = > --%>
 				<td>${formsListIndex.count }</td>
 				<td><a onclick='displayForm(${currForm.ID})'>${currForm.name }</a></td>
 				<td>${currForm.adminUsername }</td>
 				<c:if test ="${currForm.adminUsername == clientUsername }">
-				<td class = "optionsButtonClass">
-					<button onclick ="editForm('${currForm.ID}')">EDIT FORM</button>
-				</td>
+					<td class = "optionsButtonClass">
+						<button onclick ="editForm('${currForm.ID}')">EDIT FORM</button>
+					</td>
+					<c:if test = "${callingPage == 'DisplayFormsByUser' }">
+						<td>
+							${formReports[formsListIndex.count] }
+						</td>
+					</c:if>
+					
 				</c:if>
 				
 			</tr>
@@ -76,3 +87,13 @@
 			});
 	</script>
 </div>
+<script>
+	$(document).ready(function(){
+		if("${client.loginCredentials.type}" == "LEVEL1"){
+			$("#optionsColumn").hide();
+			$("#reportsColumn").hide();
+		}else if("${callingPage}" != "DisplayFormsByUser"){
+			$("#reportsColumn").hide();
+		}
+	});
+</script>

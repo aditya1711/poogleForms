@@ -41,8 +41,13 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		session.setAttribute("isClientValidationDone", false);
-		response.sendRedirect("login.jsp");
+		if(session.getAttribute("isClientValidationDone")!=null && session.getAttribute("isClientValidationDone").equals(true) && session.getAttribute("client")!=null){
+			response.sendRedirect("Dashboard");
+		}else{
+			session.setAttribute("isClientValidationDone", false);
+			response.sendRedirect("login.jsp");
+		}
+		
 	}
 
 	/**

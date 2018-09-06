@@ -23,10 +23,14 @@ import javax.servlet.http.HttpServletResponse;
         		"/MCQHandler.jsp",
         		"/TextTypeQuestionHandler.jsp",
         		"/userHeader.jsp",
-        		//"UsernameCheck",
+        		//"/UsernameCheck",
+        		//"/Logout",
+        		"/Checkout.jsp"
+        		
         },
         servletNames = {
-        		"UsernameCheck"
+        		"UsernameCheck",
+        		//"Logout"
         }
   
         //dispatcherTypes = {javax.servlet.DispatcherType.REQUEST, javax.servlet.DispatcherType.FORWARD}

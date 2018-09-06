@@ -29,6 +29,7 @@ public class DisplayFormsByUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	FormDAO formDAO ;
+	AnswersDAO answersDAO;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -52,7 +53,8 @@ public class DisplayFormsByUser extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		formDAO = (FormDAO) getServletContext().getAttribute("formDAO"); 
+		formDAO = (FormDAO) getServletContext().getAttribute("formDAO");
+		answersDAO = (AnswersDAO) getServletContext().getAttribute("answersDAO");
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,13 +99,26 @@ public class DisplayFormsByUser extends HttpServlet {
 			request.setAttribute("callingPage", "DisplayFormsByUser");
 			
 			ArrayList<Form> forms = new ArrayList<Form>();
+			ArrayList<String> formReports = new ArrayList<String>();
 			
 			for(int i =(displayIndex-1)*10;i<formIDsList.size() && i < (displayIndex)*10;i++){
-				forms.add(formDAO.getForm(formIDsList.get(i)));
+				Form form = formDAO.getForm(formIDsList.get(i));
+				forms.add(form);
+				
+				String report = "";
+				report += "users attempted this form: ";
+				report += answersDAO.getCountOfUsersAnsweredAForm(form.getID());
+				formReports.add(report);
 			}
 			
+			
+			
+			
+			
 			request.setAttribute("forms", forms);
+			request.setAttribute("formReports", formReports);
 			request.setAttribute("callingPage", "DisplayFormsByUser");
+			request.setAttribute("pageHeading", "Forms User Created:");
 			request.getRequestDispatcher("displayForms.jsp").forward(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

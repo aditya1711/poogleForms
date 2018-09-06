@@ -218,4 +218,43 @@ public class AnswersDAO extends DAO{
 		}
 		return true;
 	}
+	
+	public Long getCountOfUsersAnsweredAQuestion(Long questionID){
+		Long count=(long) 0;
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement("select count(ID) as count from answers where json_value(answerJson, '$.questionID') = ?; ");
+			int i=1;
+			ps.setLong(i++, questionID);
+			
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			count =rs.getLong("count");
+			
+			return count;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public Long getCountOfUsersAnsweredAForm(Long formID){
+		Long count=(long) 0;
+		try(Connection conn = getConnection()){
+			PreparedStatement ps = conn.prepareStatement("select count(ID) as count from answers where json_value(answerJson, '$.questionID') IN (select ID from questions where formID = ?); ");
+			int i=1;
+			ps.setLong(i++, formID);
+			
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			count =rs.getLong("count");
+			
+			return count;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

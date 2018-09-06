@@ -124,8 +124,11 @@
 		<c:import url="allPageFunctionalities.jsp"></c:import>
 	</div>
 	<BR>
-
+	
+	<h1>Edit/Create Form</h1>
+	
 	<div id="alreadyCreatedForm">
+		<h2>Existing Form:</h2><br>
 		<button onclick="deleteForm()">DELETE THIS FORM</button>
 
 		<input id="formNameInputId" type="text" name="formName"

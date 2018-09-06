@@ -69,43 +69,42 @@ public class CreateForm extends HttpServlet {
 
 		try {
 			HttpSession session = request.getSession();
-
-			try {
-				if(((Client)(session.getAttribute("client"))).getLoginCredentials().getType() == ClientTypes.LEVEL1 ||
-						!formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID"))) ){
+			
+			if(((Client)(session.getAttribute("client"))).getLoginCredentials().getType() == ClientTypes.LEVEL1 ){
+				request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+				return;
+			}
+			else{
+				Form form;
+				if(request.getParameter("formID")!=null &&
+						formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
+					
+					form = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
+				}
+				else if(request.getParameter("formID")!=null && 
+						!formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
+					
 					request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
 					return;
 				}
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
-				return;
-			}catch (NullPointerException e){
-				e.printStackTrace();
-				request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
-				return;
-			}
+				else{
+					form = (Form) request.getAttribute("form");
+				}
+				Long formID = (long) 0;
+				if(form==null){
+					form = new Form();
+					form.setAdminUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
+					formID =formDAO.addFormPrototypeToDB(form);
+					form.setID(formID);
+					System.out.println("Form not found in request in create form, Creating a new one");
+				}else{
+					formID = form.getID();
+				}
 
-			Form form;
-			if(request.getParameter("formID")!=null){
-				form = formDAO.getForm(Long.parseLong(request.getParameter("formID")));
-			}else{
-				form = (Form) request.getAttribute("form");
+				request.setAttribute("form", form);
+				request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
 			}
-			Long formID = (long) 0;
-			if(form==null){
-				form = new Form();
-				form.setAdminUsername(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername());
-				formID =formDAO.addFormPrototypeToDB(form);
-				form.setID(formID);
-				System.out.println("Form not found in request in create form, Creating a new one");
-			}else{
-				formID = form.getID();
-			}
-
-			request.setAttribute("form", form);
-			request.getRequestDispatcher("CreateForm.jsp").forward(request, response);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
