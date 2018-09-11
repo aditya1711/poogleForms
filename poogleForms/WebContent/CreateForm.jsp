@@ -97,6 +97,9 @@
 			$("#dialog").dialog('close');
 			$("#alreadyCreatedForm").append(data + "<br><br>");
 			
+		}).fail(function(xhr){
+			//console.log(data.text);
+			alert(xhr.responseText);
 		});
 		console.log(newQuestionHTML);
 		
@@ -108,6 +111,8 @@
 			formID:"${form.ID}"
 		},function(){
 			window.location.assign("Dashboard");
+		}).fail(function(data){
+			alert(data);
 		});
 	}
 </script>
@@ -193,7 +198,10 @@
 				formID: "${form.ID}",
 				formName: $("#formNameInputId").val()
 			},
-			window.location.assign("FormHandler?formID=${form.ID}"));
+			window.location.assign("FormHandler?formID=${form.ID}"))
+																	.fail(function(data){
+																			alert(data);
+																		});
 		});
 	});
 </script>

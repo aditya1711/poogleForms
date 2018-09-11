@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
+import poogleForms.maintainance.logs.DOAsLogs;
 import poogleForms.model.clients.Client;
 import poogleForms.model.clients.ClientAbstract;
 import poogleForms.model.clients.ClientTypes;
@@ -12,7 +15,9 @@ import poogleForms.model.clients.Level1Clients;
 import poogleForms.model.clients.Level2Clients;
 import poogleForms.model.clients.LoginCredentials;
 
-public class ClientsDAO extends DAO {
+public class ClientsDAO extends DAO implements DOAsLogs{
+	private static final Logger logger = Logger.getLogger("DAOsLogger");
+	
 	private static ClientsDAO clientsDAO = new ClientsDAO();
 	
 	private static final String queryForAllClientData = "select lc.username, lc.password, lc.clientType, c.firstName, c.lastName from loginCredentials as lc inner join client as c on c.username = lc.username;"; 
@@ -105,7 +110,7 @@ public class ClientsDAO extends DAO {
 			c.setLoginCredentials(new LoginCredentials(rs.getString("username"),rs.getString("password"), ClientTypes.getClientType(rs.getString("clientType"))));
 			c.setFirstName(rs.getString("firstName"));
 			c.setLastName(rs.getString("lastName"));
-	
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,9 +162,12 @@ public class ClientsDAO extends DAO {
 			ps.setString(i++, client.getLastName());
 			
 			ps.execute();
+			
+			logger.info("Adding Client to DAO: " + client);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("adding Client failed in DAO" + e);
 		}
 	}
 	
@@ -174,7 +182,9 @@ public class ClientsDAO extends DAO {
 			ps.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.error("adding LC failed in DAO" + e);
 			e.printStackTrace();
+			
 		}
 	}
 

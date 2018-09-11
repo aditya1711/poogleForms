@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import poogleForms.DAO.ClientsDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 
 /**
  * Servlet implementation class UsernameCheck
  */
 @WebServlet("/UsernameCheck")
-public class UsernameCheck extends HttpServlet {
+public class UsernameCheck extends HttpServlet implements ControllerLogs{
 	private static final long serialVersionUID = 1L;
     ClientsDAO clientsDAO;
     /**
@@ -31,7 +32,7 @@ public class UsernameCheck extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().write("usernameCheck called by get");
+		//response.getWriter().write("usernameCheck called by get");
 	}
 
 	/**

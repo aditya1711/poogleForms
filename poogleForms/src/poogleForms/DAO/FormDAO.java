@@ -9,14 +9,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.apache.log4j.Logger;
+
+import poogleForms.maintainance.logs.DOAsLogs;
 import poogleForms.model.form.Form;
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
 import poogleForms.model.form.TYPES_OF_QUESTION;
 import poogleForms.model.form.TextTypeQuestion;
 
-public class FormDAO extends DAO {
+public class FormDAO extends DAO implements DOAsLogs{
 	static FormDAO formDAO = new FormDAO();
+	
+	private static final Logger logger = Logger.getLogger("DAOsLogger");
 	
 	private static final String queryForCheckForLevel2UsernameAndFormIDPair ="select case when (select username from  forms where ID = ?) = ? then 1 else 0 end; ";
 	private static final String queryForGetingQuestionWithID = "select prompt, type as questionType,formID, ID as questionID, options from questions where id = ?;";
@@ -39,6 +44,7 @@ public class FormDAO extends DAO {
 			"end try " +
 			"begin catch " +
 			"rollback; " +
+			"select 0 as questionID; " +
 			"end catch; " ;
 	private static final String queryForInsertingFormSpecificDetatils = "begin try " + 
 			"begin transaction " + 
@@ -53,6 +59,7 @@ public class FormDAO extends DAO {
 			"end try " +
 			"begin catch " +
 			"rollback; " +
+			"select 0 as formID; " +
 			"end catch; " ;
 
 	private static final String queryForUpdatingFormName ="update forms set name= ? where ID = ?";
@@ -274,11 +281,16 @@ public class FormDAO extends DAO {
 			ps.setString(i++, options);
 			ResultSet rs = ps.executeQuery();
 			rs.next();
-			return rs.getLong("questionID");
+			Long questionID  = (Long)rs.getLong("questionID");
+			
+			logger.info("adding Question Success in DAO, questionID: " + questionID);
+			
+			return questionID;
 			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.error("adding Question Failed in DAO, Error: " + e);
 			e.printStackTrace();
 		}
 		return null;
@@ -314,10 +326,14 @@ public class FormDAO extends DAO {
 				formID = rs.getLong("formID");
 				System.out.println("Form ID entered: " + formID);
 			}
+			
+			logger.info("adding Form Prototype Success in DAO, questionID: " + formID);
+			
 			return formID;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.error("adding Form Prototype failed in DAO, error:" + e);
 			e.printStackTrace();
 		}
 		return null;
@@ -362,11 +378,21 @@ public class FormDAO extends DAO {
 			ps.setString(i++, formName);
 			ps.setLong(i++, formID);
 
-			ps.executeUpdate();
-			return (long) 1;
+			int rowsUpdated = ps.executeUpdate();
+			if(rowsUpdated>0){
+				logger.info("Updating form name Success in DAO, questionID: " + formID);
+				return (long)1;
+			}else{
+				logger.error("Updating form name Prototype failed in DAO");
+				return (long)0;
+			}
+			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("Updating form name Prototype failed in DAO, error: " + e);
 			return (long) 0;
 		}
 	}
@@ -378,11 +404,18 @@ public class FormDAO extends DAO {
 			int i=1;
 			ps.setLong(i++, questionID);
 
-			ps.executeUpdate();
-			return (long) 1;
+			int rowsUpdated = ps.executeUpdate();
+			if(rowsUpdated>0){
+				logger.info("deleting Question Success in DAO, questionID: " + questionID);
+				return (long)1;
+			}else{
+				logger.error("deleting Question Failed in DAO, Error: "+ questionID);
+				return (long)0;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("deleting Question Failed in DAO, Error: " + e);
 			return (long) 0;
 		}
 	}
@@ -394,11 +427,19 @@ public class FormDAO extends DAO {
 			int i=1;
 			ps.setLong(i++, formID);
 
-			ps.executeUpdate();
-			return (long)1;
+			int rowsUpdated = ps.executeUpdate();
+			if(rowsUpdated>0){
+				logger.info("Deleting Form Success in DAO, questionID: " + formID);
+				return (long)1;
+			}else{
+				logger.error("deleting form failed in DAO, formID: " + formID);
+				return (long)0;
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("Deleting Form failed in DAO, error: "+e);
 			return (long)0;
 		}
 	}

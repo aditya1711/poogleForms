@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
         		
         },
         servletNames = {
-        		"UsernameCheck",
+        		//"UsernameCheck",
         		//"Logout"
         }
   

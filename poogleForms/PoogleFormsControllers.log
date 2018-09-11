@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T12:58:17</date>
+  <millis>1536564497094</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>31</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T13:03:07</date>
+  <millis>1536564787813</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>36</thread>
+  <message>Adding User:
+username: asd Password: asd clientType: LEVEL1
+Name null null
+AnswerIDs: [1001167, 1001166, 1001165, 1001164, 1001163, 1001162, 1001161, 1001160, 1001173, 1001172, 1001171, 1001170, 1001169, 1001168]</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T17:32:05</date>
+  <millis>1536580925258</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>SEVERE</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>EXCEPTION in doPost():
+</message>
+  <exception>
+    <message>java.lang.NullPointerException</message>
+    <frame>
+      <class>poogleForms.model.clients.Level1Clients</class>
+      <method>toString</method>
+      <line>40</line>
+    </frame>
+    <frame>
+      <class>poogleForms.controller.general.Login</class>
+      <method>doPost</method>
+      <line>76</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>644</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>725</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>291</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.websocket.server.WsFilter</class>
+      <method>doFilter</method>
+      <line>52</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>239</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardWrapperValve</class>
+      <method>invoke</method>
+      <line>219</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardContextValve</class>
+      <method>invoke</method>
+      <line>106</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.authenticator.AuthenticatorBase</class>
+      <method>invoke</method>
+      <line>501</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardHostValve</class>
+      <method>invoke</method>
+      <line>142</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.ErrorReportValve</class>
+      <method>invoke</method>
+      <line>79</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.AbstractAccessLogValve</class>
+      <method>invoke</method>
+      <line>610</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardEngineValve</class>
+      <method>invoke</method>
+      <line>88</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.connector.CoyoteAdapter</class>
+      <method>service</method>
+      <line>537</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.AbstractHttp11Processor</class>
+      <method>process</method>
+      <line>1085</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.AbstractProtocol$AbstractConnectionHandler</class>
+      <method>process</method>
+      <line>658</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler</class>
+      <method>process</method>
+      <line>222</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>doRun</method>
+      <line>1556</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>run</method>
+      <line>1513</line>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor</class>
+      <method>runWorker</method>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor$Worker</class>
+      <method>run</method>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.threads.TaskThread$WrappingRunnable</class>
+      <method>run</method>
+      <line>61</line>
+    </frame>
+    <frame>
+      <class>java.lang.Thread</class>
+      <method>run</method>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:03:54</date>
+  <millis>1536582834830</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>31</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:04:06</date>
+  <millis>1536582846588</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>33</thread>
+  <message>User Loging out:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:04:15</date>
+  <millis>1536582855247</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>SEVERE</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>36</thread>
+  <message>EXCEPTION in doPost():
+</message>
+  <exception>
+    <message>java.lang.NullPointerException</message>
+    <frame>
+      <class>poogleForms.model.clients.Level1Clients</class>
+      <method>toString</method>
+      <line>40</line>
+    </frame>
+    <frame>
+      <class>poogleForms.controller.general.Login</class>
+      <method>doPost</method>
+      <line>76</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>644</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>725</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>291</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.websocket.server.WsFilter</class>
+      <method>doFilter</method>
+      <line>52</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>239</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardWrapperValve</class>
+      <method>invoke</method>
+      <line>219</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardContextValve</class>
+      <method>invoke</method>
+      <line>106</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.authenticator.AuthenticatorBase</class>
+      <method>invoke</method>
+      <line>501</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardHostValve</class>
+      <method>invoke</method>
+      <line>142</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.ErrorReportValve</class>
+      <method>invoke</method>
+      <line>79</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.AbstractAccessLogValve</class>
+      <method>invoke</method>
+      <line>610</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardEngineValve</class>
+      <method>invoke</method>
+      <line>88</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.connector.CoyoteAdapter</class>
+      <method>service</method>
+      <line>537</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.AbstractHttp11Processor</class>
+      <method>process</method>
+      <line>1085</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.AbstractProtocol$AbstractConnectionHandler</class>
+      <method>process</method>
+      <line>658</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler</class>
+      <method>process</method>
+      <line>222</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>doRun</method>
+      <line>1556</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>run</method>
+      <line>1513</line>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor</class>
+      <method>runWorker</method>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor$Worker</class>
+      <method>run</method>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.threads.TaskThread$WrappingRunnable</class>
+      <method>run</method>
+      <line>61</line>
+    </frame>
+    <frame>
+      <class>java.lang.Thread</class>
+      <method>run</method>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:06:00</date>
+  <millis>1536582960515</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>SEVERE</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>31</thread>
+  <message>EXCEPTION in doPost():
+</message>
+  <exception>
+    <message>java.lang.NullPointerException</message>
+    <frame>
+      <class>poogleForms.model.clients.Level1Clients</class>
+      <method>toString</method>
+      <line>40</line>
+    </frame>
+    <frame>
+      <class>poogleForms.controller.general.Login</class>
+      <method>doPost</method>
+      <line>76</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>644</line>
+    </frame>
+    <frame>
+      <class>javax.servlet.http.HttpServlet</class>
+      <method>service</method>
+      <line>725</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>291</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.websocket.server.WsFilter</class>
+      <method>doFilter</method>
+      <line>52</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>internalDoFilter</method>
+      <line>239</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.ApplicationFilterChain</class>
+      <method>doFilter</method>
+      <line>206</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardWrapperValve</class>
+      <method>invoke</method>
+      <line>219</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardContextValve</class>
+      <method>invoke</method>
+      <line>106</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.authenticator.AuthenticatorBase</class>
+      <method>invoke</method>
+      <line>501</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardHostValve</class>
+      <method>invoke</method>
+      <line>142</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.ErrorReportValve</class>
+      <method>invoke</method>
+      <line>79</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.valves.AbstractAccessLogValve</class>
+      <method>invoke</method>
+      <line>610</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.core.StandardEngineValve</class>
+      <method>invoke</method>
+      <line>88</line>
+    </frame>
+    <frame>
+      <class>org.apache.catalina.connector.CoyoteAdapter</class>
+      <method>service</method>
+      <line>537</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.AbstractHttp11Processor</class>
+      <method>process</method>
+      <line>1085</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.AbstractProtocol$AbstractConnectionHandler</class>
+      <method>process</method>
+      <line>658</line>
+    </frame>
+    <frame>
+      <class>org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler</class>
+      <method>process</method>
+      <line>222</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>doRun</method>
+      <line>1556</line>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.net.NioEndpoint$SocketProcessor</class>
+      <method>run</method>
+      <line>1513</line>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor</class>
+      <method>runWorker</method>
+    </frame>
+    <frame>
+      <class>java.util.concurrent.ThreadPoolExecutor$Worker</class>
+      <method>run</method>
+    </frame>
+    <frame>
+      <class>org.apache.tomcat.util.threads.TaskThread$WrappingRunnable</class>
+      <method>run</method>
+      <line>61</line>
+    </frame>
+    <frame>
+      <class>java.lang.Thread</class>
+      <method>run</method>
+    </frame>
+  </exception>
+</record>
+<record>
+  <date>2018-09-10T18:08:32</date>
+  <millis>1536583112765</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:08:55</date>
+  <millis>1536583135880</millis>
+  <sequence>34</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>37</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:08:56</date>
+  <millis>1536583136179</millis>
+  <sequence>35</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>37</thread>
+  <message>edit form attempt by hasan123 formID: 1001149</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:15:49</date>
+  <millis>1536583549272</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:15:55</date>
+  <millis>1536583555630</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:15:58</date>
+  <millis>1536583558170</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>Creating form attempt by hasan123 formID: 1001177</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:18:07</date>
+  <millis>1536583687551</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:18:19</date>
+  <millis>1536583699613</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>37</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:18:19</date>
+  <millis>1536583699618</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>37</thread>
+  <message>edit form attempt by hasan123 formID: 1001049</message>
+</record>
+<record>
+  <date>2018-09-10T18:18:23</date>
+  <millis>1536583703096</millis>
+  <sequence>34</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>25</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:18:23</date>
+  <millis>1536583703101</millis>
+  <sequence>35</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>25</thread>
+  <message>edit form attempt by hasan123 formID: 1001177</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:22:45</date>
+  <millis>1536583965448</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:22:49</date>
+  <millis>1536583969220</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:22:49</date>
+  <millis>1536583969376</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>Creating form attempt by hasan123 formID: 1001180</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:25:24</date>
+  <millis>1536584124801</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001180, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:25:27</date>
+  <millis>1536584127659</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:25:27</date>
+  <millis>1536584127665</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>edit form attempt by hasan123 formID: 1001158</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:32:23</date>
+  <millis>1536584543756</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001180, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:32:26</date>
+  <millis>1536584546619</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:32:26</date>
+  <millis>1536584546624</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>edit form attempt by hasan123 formID: 1001155</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:38:11</date>
+  <millis>1536584891462</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>33</thread>
+  <message>Adding User:
+username: asd Password: asd clientType: LEVEL1
+Name null null
+AnswerIDs: [1001167, 1001166, 1001165, 1001164, 1001163, 1001162, 1001161, 1001160, 1001173, 1001172, 1001171, 1001170, 1001169, 1001168]</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T18:48:34</date>
+  <millis>1536585514784</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>33</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001180, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T18:48:36</date>
+  <millis>1536585516348</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T18:48:36</date>
+  <millis>1536585516353</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>35</thread>
+  <message>edit form attempt by hasan123 formID: 1001149</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T19:01:11</date>
+  <millis>1536586271377</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001180, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-10T19:01:12</date>
+  <millis>1536586272788</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-10T19:01:12</date>
+  <millis>1536586272792</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>edit form attempt by hasan123 formID: 1001180</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-10T19:06:01</date>
+  <millis>1536586561765</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: asd Password: asd clientType: LEVEL1
+Name null null
+AnswerIDs: [1001167, 1001166, 1001165, 1001164, 1001163, 1001162, 1001161, 1001160, 1001184, 1001173, 1001172, 1001171, 1001170, 1001169, 1001168]</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-11T11:06:17</date>
+  <millis>1536644177831</millis>
+  <sequence>31</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>32</thread>
+  <message>Adding User:
+username: hasan123 Password: hasan123 clientType: LEVEL2
+Name hasan faraz
+AnswerIDs: [1001100, 1001099, 1001098, 1001097, 1001096, 1001095, 1001094, 1001093, 1001092, 1001091, 1001090, 1001089, 1001088, 1001127, 1001124, 1001123, 1001122, 1001121, 1001148, 1001147, 1001146, 1001153, 1001055, 1001054, 1001053, 1001071, 1001070, 1001069, 1001068, 1001067, 1001066, 1001065, 1001064, 1001063, 1001062, 1001061, 1001060, 1001059, 1001058, 1001057, 1001056, 1001087, 1001086, 1001085, 1001084, 1001083, 1001082, 1001081, 1001080, 1001079, 1001078, 1001077, 1001076, 1001075, 1001074, 1001073, 1001072]
+FormsCreated: [1001149, 1001180, 1001049, 1001177, 1001158, 1001012, 1001155, 1001009, 1001041, 1001024, 1001104]</message>
+</record>
+<record>
+  <date>2018-09-11T11:06:20</date>
+  <millis>1536644180456</millis>
+  <sequence>32</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>doGet() request by hasan123</message>
+</record>
+<record>
+  <date>2018-09-11T11:06:20</date>
+  <millis>1536644180813</millis>
+  <sequence>33</sequence>
+  <logger>PoogleFormsControllers</logger>
+  <level>INFO</level>
+  <class>poogleForms.maintainance.logs.ControllerLogs</class>
+  <method>createLog</method>
+  <thread>34</thread>
+  <message>edit form attempt by hasan123 formID: 1001158</message>
+</record>
+</log>

@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 import poogleForms.model.form.Form;
 
 /**
  * Servlet implementation class DisplayAllForms
  */
 @WebServlet("/DisplayAllForms.NOACCESS")
-public class DisplayAllForms extends HttpServlet {
+public class DisplayAllForms extends HttpServlet implements ControllerLogs {
 	private static final long serialVersionUID = 1L;
        
     /**

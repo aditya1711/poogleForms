@@ -14,10 +14,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 
+import poogleForms.maintainance.logs.DOAsLogs;
 import poogleForms.model.form.Answer;
 
-public class AnswersDAO extends DAO{
+public class AnswersDAO extends DAO implements DOAsLogs{
+	
+	private static final Logger logger = Logger.getLogger("DAOsLogger");
 	
 	private static AnswersDAO answerDAO = new AnswersDAO();
 	
@@ -169,11 +173,15 @@ public class AnswersDAO extends DAO{
 				ps.setString(i++, ans.toJSONString());
 				
 				ps.executeUpdate();
+				
+				logger.info("A new ans added: " + ans);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				logger.error("adding ans failed in DAO" + e);
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
+				logger.error("adding ans failed in DAO" + e);
 				e.printStackTrace();
 			}
 		}
@@ -188,11 +196,15 @@ public class AnswersDAO extends DAO{
 			ps.setString(i++, ans.getUsername());
 			
 			ps.executeUpdate();
+			
+			logger.info("Ans Updated: " + ans);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.error("updating ans failed in DAO" + e);
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
+			logger.error("updating ans failed in DAO" + e);
 			e.printStackTrace();
 		}
 	}

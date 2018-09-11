@@ -67,33 +67,17 @@
 					//alert("ugabuga1");
 				} else {
 					check = true;
-					alert("ugabuga");
+					//alert("ugabuga");
 				}
 				console.log(check);
+			},
+			error: function(){
+				alert("Some error, Try again");
 			}
 			
 		});
 		console.log(check);
 		return check;
-		
-		/* $.post("UsernameCheck", {
-			command : "checkForUsernameAndPasswordPair",
-			username : username,
-			password : password
-		}, function(data) {
-			if (data == "false") {
-				check = false;
-				alert("ugabuga2");
-			} else if (data == "true") {
-				check = true;
-				alert("ugabuga1");
-			} else {
-				check = true;
-				alert("ugabuga");
-			}
-			console.log(check);
-			return check;
-		}); */
 		
 	}
 </script>

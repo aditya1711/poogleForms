@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 import poogleForms.model.clients.Client;
+import poogleForms.model.clients.ClientTypes;
 import poogleForms.model.form.Form;
 import poogleForms.model.form.MultipleChoiceTypeQuestion;
 import poogleForms.model.form.Question;
@@ -24,7 +26,7 @@ import poogleForms.model.form.TextTypeQuestion;
  * Servlet implementation class CreateQuestion
  */
 @WebServlet("/CreateQuestion")
-public class CreateQuestion extends HttpServlet {
+public class CreateQuestion extends HttpServlet implements ControllerLogs{
 	private static final long serialVersionUID = 1L;
 	private FormDAO formDAO;  
 	
@@ -73,13 +75,29 @@ public class CreateQuestion extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			HttpSession session = request.getSession();
+			
+			
+
+			
+			
 			if(request.getParameter("command").equals("createQuestion")){
+				
+				if(((Client)(session.getAttribute("client"))).getLoginCredentials().getType() == ClientTypes.LEVEL1 ){
+					response.setStatus(401);
+					request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+					return;
+				}else if(!formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), Long.parseLong(request.getParameter("formID")))){
+					response.setStatus(401);
+					request.getRequestDispatcher("UnauthorizedAccess.jsp").forward(request, response);
+					return;
+				}
+				
 				String questionPrompt = request.getParameter("questionPrompt");
 				String optionsString = request.getParameter("options");
 				Long formID = Long.parseLong(request.getParameter("formID"));
 				String[] options = optionsString.split(";");
 				Question q = null;
-				
+								
 				if(request.getParameter("questionType").equals("MCQ")){
 					q= new MultipleChoiceTypeQuestion();
 					q.setPrompt(questionPrompt);
@@ -94,17 +112,13 @@ public class CreateQuestion extends HttpServlet {
 				
 				Long questionID = formDAO.addQuestionToDB(q);
 				if(questionID==0){
+					response.setStatus(504);
 					response.getWriter().write("Question Adding failed, Try again");
 					return;
 				}
 				request.setAttribute("currQuestion", formDAO.getQuestion(questionID));
 				request.setAttribute("callingPage", "CreateQuestionServlet");
 				request.setAttribute("formAdminUsername", formDAO.getForm(formID).getAdminUsername());
-				
-				System.out.println(request.getParameter("questionPrompt"));
-				System.out.println(request.getParameter("questionType"));
-				System.out.println(request.getParameter("options"));
-				System.out.println(request.getParameter("formID"));
 				
 				request.getRequestDispatcher(q.getHandler()).forward(request, response);
 			}
@@ -113,6 +127,7 @@ public class CreateQuestion extends HttpServlet {
 				if(formDAO.checkForLevel2UsernameAndFormIDPair(((Client)(session.getAttribute("client"))).getLoginCredentials().getUsername(), quesToDelete.getFormID())){
 					Long result = formDAO.deleteQuestion(Long.parseLong(request.getParameter("questionID")));
 					if(result== 0){
+						response.setStatus(504);
 						response.getWriter().println("delete Question FAILED. TRY AGAIN");
 						return;
 					}
@@ -125,6 +140,7 @@ public class CreateQuestion extends HttpServlet {
 				}
 				else{
 					System.out.println("unauthorized delete question");
+					response.setStatus(401);
 					response.getWriter().println("unauthorized delete question");
 					response.getWriter().flush();
 					response.flushBuffer();
@@ -134,7 +150,7 @@ public class CreateQuestion extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			response.sendRedirect("DeveloperError.jsp");
+			response.setStatus(500);
 		}
 		
 		

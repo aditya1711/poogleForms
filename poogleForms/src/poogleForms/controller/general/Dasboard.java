@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import poogleForms.DAO.FormDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 import poogleForms.model.clients.ClientTypes;
 import poogleForms.model.clients.Level2Clients;
 import poogleForms.model.clients.LoginCredentials;
@@ -22,7 +23,7 @@ import poogleForms.model.form.Form;
  * Servlet implementation class Dasboard
  */
 @WebServlet("/Dashboard")
-public class Dasboard extends HttpServlet {
+public class Dasboard extends HttpServlet implements ControllerLogs{
 	private static final long serialVersionUID = 1L;
     private FormDAO formDAO;   
     /**

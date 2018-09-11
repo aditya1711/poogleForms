@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import poogleForms.DAO.AnswersDAO;
 import poogleForms.DAO.FormDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 import poogleForms.model.clients.Client;
 import poogleForms.model.clients.ClientTypes;
 import poogleForms.model.clients.Level1Clients;
@@ -25,7 +26,7 @@ import poogleForms.model.form.Form;
  * Servlet implementation class DisplayFormsByUser
  */
 @WebServlet("/DisplayFormsByUser")
-public class DisplayFormsByUser extends HttpServlet {
+public class DisplayFormsByUser extends HttpServlet implements ControllerLogs{
 	private static final long serialVersionUID = 1L;
 	
 	FormDAO formDAO ;

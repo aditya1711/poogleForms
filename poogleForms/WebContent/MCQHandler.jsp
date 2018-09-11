@@ -30,12 +30,20 @@
 		console.log($("#" + questionDivID).text());
 		console.log("#" + questionDivID);
 		//$("#" + questionDivID).hide();
-		$("#" + questionDivID).load("CreateQuestion", {
-			command : "deleteQuestion",
-			questionID : questionID
-		}, function() {
-			$("#" + questionDivID).hide(2000);
+		$.ajax({
+			type:'POST',
+			url: "CreateQuestion",
+			data: {
+				command : "deleteQuestion",
+				questionID : questionID
+			},
+			error: function(xhr, status, error){
+				alert(xhr.responseText);
+			},
+			success: function(data){
+				$("#" + questionDivID).html(data);
+				$("#" + questionDivID).hide(2000);
+			}
 		});
-
 	}
 </script>

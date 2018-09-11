@@ -1,6 +1,7 @@
 package poogleForms.controller.general;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import poogleForms.DAO.ClientsDAO;
+import poogleForms.maintainance.logs.ControllerLogs;
 import poogleForms.model.clients.Client;
 import poogleForms.model.clients.Level1Clients;
 
@@ -18,7 +20,7 @@ import poogleForms.model.clients.Level1Clients;
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class Login extends HttpServlet implements ControllerLogs{
 	private static final long serialVersionUID = 1L;
     private ClientsDAO clientsDAO;
     private ServletContext ctx;
@@ -33,6 +35,7 @@ public class Login extends HttpServlet {
 	
 	public void init(){
 		clientsDAO = (ClientsDAO) getServletContext().getAttribute("clientsDAO");
+		ControllerLogs.setupLogger();
 	}
 
 	/**
@@ -69,9 +72,13 @@ public class Login extends HttpServlet {
 			session.setAttribute("client", newClient);
 			session.setAttribute("isClientValidationDone", true);
 			response.sendRedirect("Dashboard");
+			
+			ControllerLogs.createLog(Level.INFO,"Adding User:\n" + newClient.toString());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ControllerLogs.createLog(Level.SEVERE,"EXCEPTION in doPost():\n", e);
 			response.sendRedirect("DeveloperError.jsp");
 		}
 		
